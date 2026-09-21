@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دعوة زفاف أحمد ودانا</title>
+    <title>دعوة زفاف أحمد ودانا | Ahmed & Dana Wedding</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700&family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@300;400;600;700;800&family=Cinzel:wght@400;600;700&family=Great+Vibes&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Reem+Kufi:wght@500;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* تعريف الخطوط العربية واللاتينية الفاخرة */
         .font-script { font-family: 'Aref Ruqaa', serif; }
         .font-quran { font-family: 'Amiri', serif; }
         .font-body { font-family: 'Cairo', sans-serif; }
+        .font-ibm { font-family: 'IBM Plex Sans Arabic', sans-serif; }
         .font-numbers { font-family: 'Cinzel', 'Playfair Display', serif; }
         .font-handwriting { font-family: 'Great Vibes', cursive; }
+        .font-kufi { font-family: 'Reem Kufi', sans-serif; }
+        .font-en-serif { font-family: 'Playfair Display', serif; }
+        .font-en-sans { font-family: 'Montserrat', sans-serif; }
 
         /* تخصيص التمرير السلس */
         html {
@@ -55,8 +59,6 @@
         }
 
         /* ==================== أنماط التأثيرات الحركية عند التمرير ==================== */
-        
-        /* 1. تأثير الظهور التدريجي Fade In */
         .reveal-fade {
             opacity: 0;
             transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -65,7 +67,6 @@
             opacity: 1;
         }
 
-        /* 2. تأثير الظهور من الأسفل للأعلى Fade In Up */
         .reveal-up {
             opacity: 0;
             transform: translateY(30px);
@@ -76,35 +77,11 @@
             transform: translateY(0);
         }
 
-        /* 3. تأثير الانزلاق الأفقي من اليسار */
-        .reveal-left {
-            opacity: 0;
-            transform: translateX(-40px);
-            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal-left.active {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* 4. تأثير الانزلاق الأفقي من اليمين */
-        .reveal-right {
-            opacity: 0;
-            transform: translateX(40px);
-            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal-right.active {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* تأخيرات زمنية للظهور المتتابع */
         .delay-100 { transition-delay: 100ms; }
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
         .delay-400 { transition-delay: 400ms; }
         .delay-500 { transition-delay: 500ms; }
-        .delay-600 { transition-delay: 600ms; }
 
         /* مؤشر الكتابة للسطر الأخير */
         .typing-cursor::after {
@@ -121,17 +98,27 @@
 </head>
 <body class="bg-[#f4ebdf] text-[#4A3E3D] font-body selection:bg-[#D4AF37] selection:text-white min-h-screen">
 
+    <!-- عنصر تشغيل الموسيقى بالخلفية -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="background-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ==================== زر تبديل اللغة (Toggle Switch) المطابق للصورة ==================== -->
+    <div class="fixed top-5 left-5 z-40">
+        <button id="lang-toggle-btn" onclick="toggleLanguage()" class="bg-[#2a1c24]/85 hover:bg-[#2a1c24] border border-[#8C6D46]/40 text-[#d4af37] px-2 py-1.5 rounded-full flex items-center justify-between w-20 shadow-xl transition-all duration-300 backdrop-blur-md cursor-pointer select-none">
+            <span id="lang-circle" class="w-6 h-6 rounded-full border-2 border-[#cbb89d] bg-transparent flex items-center justify-center transition-transform duration-300"></span>
+            <span id="lang-text" class="text-xs font-bold font-numbers px-2 text-[#d4af37]">EN</span>
+        </button>
+    </div>
+
     <!-- ==================== الصفحة الأولى: المظروف التفاعلي ==================== -->
     <div id="envelope-page" class="fixed inset-0 z-50 bg-[#f4ebdf] flex flex-col items-center justify-center p-4 transition-opacity duration-1000">
         <div class="w-full max-w-sm aspect-9-16 relative rounded-2xl overflow-hidden shadow-2xl cursor-pointer group border border-[#e2d5c3]" onclick="openEnvelope()">
-            
-            <!-- صورة المظروف الثابتة (قبل الضغط) -->
+            <!-- صورة المظروف الثابتة -->
             <img id="envelope-img" src="envelope-thumb.jpg" alt="المظروف" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-            
-            <!-- فيديو فتح المظروف (يعمل عند الضغط) -->
+            <!-- فيديو فتح المظروف -->
             <video id="envelope-video" class="w-full h-full object-cover hidden" playsinline muted>
                 <source src="envelope-opening.mp4" type="video/mp4">
-                متصفحك لا يدعم تشغيل الفيديو.
             </video>
         </div>
     </div>
@@ -141,30 +128,28 @@
 
         <!-- 1. القسم الأول: البانر الرئيسي -->
         <section class="relative w-full aspect-9-16 flex flex-col items-center justify-center text-center px-6 overflow-hidden text-[#fdfeef]">
-            <!-- صورة خلفية البانر -->
             <img src="main-banner.jpg" alt="خلفية الدعوة" class="absolute inset-0 w-full h-full object-cover">
 
-            <!-- المحتوى المجمع في المنتصف -->
             <div class="relative z-10 w-full my-auto space-y-6">
-                <!-- الجزء العلوي: البسملة والآية -->
+                <!-- البسملة والآية / الترجمة -->
                 <div class="space-y-4">
-                    <p class="font-quran text-lg md:text-xl text-[#fdfeef]">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</p>
+                    <p data-key="bismillah" class="font-quran text-lg md:text-xl text-[#fdfeef]">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</p>
                     
-                    <p class="font-quran text-base md:text-lg leading-relaxed text-[#fdfeef] px-2">
+                    <p data-key="quran-verse" class="font-quran text-base md:text-lg leading-relaxed text-[#fdfeef] px-2">
                         ﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ﴾
                     </p>
-                    <span class="block text-xs font-light text-[#fdfeef]/90">سورة الروم، الآية (21)</span>
+                    <span data-key="quran-surah" class="block text-xs font-light text-[#fdfeef]/90">سورة الروم، الآية (21)</span>
                 </div>
 
-                <!-- الفاصل المرجعي المرفق -->
+                <!-- الفاصل -->
                 <div class="flex justify-center py-2">
                     <img src="divider.png" alt="فاصل" class="w-48 md:w-56 h-auto object-contain">
                 </div>
 
-                <!-- الجزء السفلي: النص الترحيبي -->
+                <!-- النص الترحيبي -->
                 <div class="space-y-3">
-                    <p class="font-script text-xl md:text-2xl text-[#fdfeef]">بكل الحب والفرح،</p>
-                    <p class="text-sm md:text-base leading-relaxed text-[#fdfeef] px-4 font-light">
+                    <p data-key="welcome-title" class="font-script text-xl md:text-2xl text-[#fdfeef]">بكل الحب والفرح،</p>
+                    <p data-key="welcome-text" class="text-sm md:text-base leading-relaxed text-[#fdfeef] px-4 font-light">
                         يسرّنا أن نشارككم بداية أجمل فصول حياتنا،<br>وأن تكونوا معنا لنحتفل بيوم زفافنا.
                     </p>
                 </div>
@@ -172,275 +157,425 @@
         </section>
 
         <!-- 2. القسم الثاني: فيديو خلفية مع اسم العروسين -->
-        <section class="relative w-full aspect-9-16 flex items-start justify-center text-center overflow-hidden pt-20">
-            <!-- فيديو الخلفية -->
+        <section class="relative w-full aspect-9-16 flex items-center justify-center text-center overflow-hidden">
             <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
                 <source src="couples-video.mp4" type="video/mp4">
             </video>
 
-            <!-- طبقة دمج ناعمة للوصل بين الأقسام دون حدود -->
-            <div class="absolute inset-0 bg-gradient-to-t from-[#f4ebdf] via-[#f4ebdf]/30 to-[#f4ebdf]"></div>
+            <div class="absolute inset-0 bg-black/20"></div>
 
-            <div class="relative z-10 space-y-8 px-4">
-                <!-- ظهور تدريجي لعنوان حفل زفاف -->
-                <h2 class="font-script text-3xl md:text-4xl text-[#4A3B32] font-bold tracking-widest drop-shadow-sm reveal-fade">حفل زفاف</h2>
+            <div class="relative z-10 space-y-2 px-4 w-full flex flex-col items-center justify-center">
+                <h2 data-key="wedding-title" class="font-body font-normal text-sm md:text-base text-white tracking-wider drop-shadow-md reveal-fade -translate-y-2">
+                    حفل زفاف
+                </h2>
                 
-                <!-- ظهور تدريجي لأسماء العروسين بتأخير بسيط -->
-                <div class="font-script text-6xl md:text-7xl text-[#2C221E] font-bold drop-shadow-md py-2 leading-tight reveal-fade delay-300">
-                    أحمد <span class="text-4xl md:text-5xl text-[#5A473E]">&</span> دانا
+                <div data-key="couples-names" class="font-script text-5xl md:text-6xl text-white font-bold drop-shadow-lg tracking-wider leading-relaxed reveal-fade delay-200">
+                    أحمد <span class="text-3xl md:text-4xl px-2 font-normal">و</span> دانا
                 </div>
             </div>
         </section>
 
-        <!-- 3. القسم الثالث: موعد الحفل والعداد التنازلي -->
-        <section class="py-12 px-6 text-center space-y-8 bg-[#f4ebdf]">
-            <div class="space-y-3 flex flex-col items-center">
-                <!-- الفاصل الزخرفي فوق موعد الحفل -->
-                <img src="date-divider.png" alt="فاصل موعد الحفل" class="w-48 md:w-56 h-auto object-contain mb-1">
-                
-                <h3 class="font-script text-3xl text-[#8C6D46]">موعد الحفل</h3>
+        <!-- 3. القسم الثالث: تفاصيل الحفل والخرائط -->
+        <section class="py-12 px-6 text-center space-y-8 bg-[#ebdeca]">
+            <div class="space-y-4 flex flex-col items-center reveal-up">
+                <img src="date-divider.png" alt="زخرفة تفاصيل الحفل" class="w-52 md:w-60 h-auto object-contain">
+                <h3 data-key="event-details-title" class="font-ibm text-lg md:text-xl font-medium text-[#785E3B]">تفاصيل الحفل</h3>
             </div>
 
-            <!-- تفاصيل التاريخ والوقت -->
-            <div class="space-y-2 text-lg text-[#5C4D4A]">
-                <p class="font-semibold text-xl text-[#785E3B]">الأحد ١ نوفمبر ٢٠٢٦</p>
-                <p class="text-base text-[#786452]">الساعة ٧:٠٠ مساءً</p>
-            </div>
-
-            <!-- العداد التنازلي مع ظهور كل خانة تلو الأخرى -->
-            <div class="pt-6 space-y-6">
-                <!-- عنوان العداد -->
-                <p class="text-xl md:text-2xl text-[#785E3B] font-script">باقٍ على فرحتنا</p>
-
-                <!-- أرقام العداد متسلسلة الظهور -->
-                <div class="flex justify-center items-center max-w-xs mx-auto my-4 dir-rtl">
-                    <!-- أيام -->
-                    <div class="flex-1 text-center reveal-fade delay-100">
-                        <span id="days" class="block font-numbers text-4xl md:text-5xl text-[#8C6D46] font-normal tracking-tight">00</span>
-                        <span class="text-sm text-[#786452] font-body mt-2 block">أيام</span>
+            <div class="grid grid-cols-3 gap-2 py-4 reveal-up delay-200">
+                <!-- التاريخ -->
+                <div class="flex flex-col items-center space-y-2">
+                    <div class="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center">
+                        <img src="icon-calendar.png" alt="التاريخ" class="w-full h-full object-contain">
                     </div>
-
-                    <!-- فاصل عمودي -->
-                    <div class="w-px h-12 bg-[#CBB89D]/70 my-auto reveal-fade delay-200"></div>
-
-                    <!-- ساعات -->
-                    <div class="flex-1 text-center reveal-fade delay-200">
-                        <span id="hours" class="block font-numbers text-4xl md:text-5xl text-[#8C6D46] font-normal tracking-tight">00</span>
-                        <span class="text-sm text-[#786452] font-body mt-2 block">ساعات</span>
-                    </div>
-
-                    <!-- فاصل عمودي -->
-                    <div class="w-px h-12 bg-[#CBB89D]/70 my-auto reveal-fade delay-300"></div>
-
-                    <!-- دقائق -->
-                    <div class="flex-1 text-center reveal-fade delay-300">
-                        <span id="minutes" class="block font-numbers text-4xl md:text-5xl text-[#8C6D46] font-normal tracking-tight">00</span>
-                        <span class="text-sm text-[#786452] font-body mt-2 block">دقائق</span>
-                    </div>
-
-                    <!-- فاصل عمودي -->
-                    <div class="w-px h-12 bg-[#CBB89D]/70 my-auto reveal-fade delay-400"></div>
-
-                    <!-- ثوانٍ -->
-                    <div class="flex-1 text-center reveal-fade delay-400">
-                        <span id="seconds" class="block font-numbers text-4xl md:text-5xl text-[#8C6D46] font-normal tracking-tight">00</span>
-                        <span class="text-sm text-[#786452] font-body mt-2 block">ثوانٍ</span>
-                    </div>
+                    <span data-key="date-label" class="font-bold text-base text-[#6E5637]">التاريخ</span>
+                    <span data-key="date-val" class="text-sm text-[#5C4D4A] font-medium leading-snug">الأحد ١ نوفمبر ٢٠٢٦</span>
                 </div>
 
-                <!-- التاريخ بالخط الذهبي المكتوب تحت العداد -->
-                <p class="font-script text-2xl text-[#8C6D46] pt-2">الأحد ١ نوفمبر ٢٠٢٦</p>
-                
-                <!-- خط فاصل ناعم -->
-                <div class="w-16 h-0.5 bg-[#CBB89D]/50 mx-auto rounded-full"></div>
+                <!-- المكان -->
+                <div class="flex flex-col items-center space-y-2">
+                    <div class="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center">
+                        <img src="icon-location.png" alt="المكان" class="w-full h-full object-contain">
+                    </div>
+                    <span data-key="venue-label" class="font-bold text-base text-[#6E5637]">المكان</span>
+                    <span data-key="venue-val" class="text-sm text-[#5C4D4A] font-medium leading-snug">بالاتزو فيرساتشي دبي</span>
+                </div>
+
+                <!-- الوقت -->
+                <div class="flex flex-col items-center space-y-2">
+                    <div class="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center">
+                        <img src="icon-time.png" alt="الوقت" class="w-full h-full object-contain">
+                    </div>
+                    <span data-key="time-label" class="font-bold text-base text-[#6E5637]">الوقت</span>
+                    <span data-key="time-val" class="text-sm text-[#5C4D4A] font-medium leading-snug">٧:٠٠ مساءً</span>
+                </div>
             </div>
-        </section>
 
-        <!-- 4. القسم الرابع: موقع الحفل والخريطة -->
-        <section class="py-12 px-6 text-center space-y-6 bg-[#f4ebdf]">
-            <div class="space-y-3 flex flex-col items-center">
-                <!-- صورة فاصل موقع الحفل فوق العنوان -->
-                <img src="location-divider.png" alt="فاصل موقع الحفل" class="w-48 md:w-56 h-auto object-contain mb-1">
-                
-                <h3 class="font-script text-3xl text-[#8C6D46]">موقع الحفل</h3>
-                
-                <!-- الخط الفاصل المفصول بمسافة أنيقة أسفل كلمة موقع الحفل -->
-                <div class="w-12 h-0.5 bg-[#CBB89D]/60 mx-auto rounded-full mt-3"></div>
-            </div>
-
-            <p class="text-lg text-[#5C4D4A] font-medium pt-2">بالاتزو فيرساتشي دبي</p>
-
-            <!-- الخريطة -->
-            <div class="w-full h-64 rounded-2xl overflow-hidden shadow-sm border border-[#e2d5c3] map-container">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3609.704207134371!2d55.3378546!3d25.2132179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f6D1F10712A61%3A0x811FB93006A7C6B7!2sPalazzo%20Versace%20Dubai!5e0!3m2!1sen!2sae!4v1700000000000!5m2!1sen!2sae" 
-                    allowfullscreen="" 
-                    loading="lazy">
-                </iframe>
+            <div class="pt-2 reveal-up delay-300">
+                <p data-key="location-address" class="font-script text-xl md:text-2xl text-[#6E5637]">الجداف، واجهة الجداف المائية، دبي</p>
             </div>
 
             <!-- زر التوجيه للخرائط -->
-            <div class="pt-2">
-                <a href="https://maps.google.com/?q=Palazzo%20Versace%20Dubai" target="_blank" class="inline-flex items-center gap-2 text-sm text-[#8C6D46] hover:text-[#786452] underline underline-offset-4 transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
-                    <span>فتح الموقع في الخريطة</span>
+            <div class="pt-4 reveal-up delay-400">
+                <a href="https://maps.google.com/?q=Palazzo%20Versace%20Dubai" target="_blank" class="inline-flex items-center justify-center gap-2 px-8 py-3 border border-[#8C6D46] text-[#8C6D46] hover:bg-[#8C6D46]/10 text-base font-semibold rounded-none transition-all duration-300">
+                    <span data-key="map-btn">افتح على الخريطة</span>
+                    <span class="text-xs">↗</span>
                 </a>
             </div>
-        </section>
 
-        <!-- 5. قسم قواعد اللباس (Dress Code) مع انزلاق أزياء الرجال والنساء متتابعين -->
-        <section class="py-12 px-6 text-center space-y-6 bg-[#f4ebdf]">
-            <div class="space-y-3 flex flex-col items-center">
-                <!-- صورة رسمة العروسين أعلاه -->
-                <img src="couple-illustration.png" alt="رسوم العروسين" class="w-52 md:w-60 h-auto object-contain mb-1 drop-shadow-sm">
-
-                <!-- العنوان بخط يدوي فاخر -->
-                <h3 class="font-handwriting text-5xl md:text-6xl text-[#8C6D46] tracking-wide py-1">Dress Code</h3>
-                <div class="w-12 h-0.5 bg-[#CBB89D]/60 mx-auto rounded-full mt-1"></div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto pt-4">
-                <!-- صورة أزياء الرجال (تظهر بانزلاق افقي من اليسار أولاً) -->
-                <div class="flex flex-col items-center space-y-3 reveal-left delay-100">
-                    <div class="w-full aspect-[3/4] p-1.5 rounded-2xl bg-[#f8f3eb] border border-[#d2c4b1] shadow-sm flex items-center justify-center">
-                        <div class="w-full h-full rounded-xl overflow-hidden border border-[#e8ded0]/80">
-                            <img src="men-dress.jpg" alt="Formal" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                    <span class="font-numbers text-sm font-semibold text-[#6E5637] tracking-wider">Formal</span>
+            <!-- الصورتان -->
+            <div class="pt-6 space-y-4 flex flex-col items-center max-w-sm mx-auto">
+                <div class="w-full overflow-hidden rounded-xl border border-[#d2c4b1] shadow-sm reveal-up delay-100">
+                    <img src="map-image-1.jpg" alt="صورة توضيحية 1" class="w-full h-auto object-cover">
                 </div>
-
-                <!-- صورة أزياء النساء (تظهر بانزلاق افقي من اليمين بعدها) -->
-                <div class="flex flex-col items-center space-y-3 reveal-right delay-300">
-                    <div class="w-full aspect-[3/4] p-1.5 rounded-2xl bg-[#f8f3eb] border border-[#d2c4b1] shadow-sm flex items-center justify-center">
-                        <div class="w-full h-full rounded-xl overflow-hidden border border-[#e8ded0]/80">
-                            <img src="women-dress.jpg" alt="Avoid White Dress" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                    <span class="font-numbers text-xs font-semibold text-[#6E5637] tracking-tight leading-tight">Avoid White Dress</span>
+                <div class="w-full overflow-hidden rounded-xl border border-[#d2c4b1] shadow-sm reveal-up delay-200">
+                    <img src="map-image-2.jpg" alt="صورة توضيحية 2" class="w-full h-auto object-cover">
                 </div>
             </div>
         </section>
 
-        <!-- 6. قسم تأكيد الحضور (RSVP) مع ظهور العناصر من الأسفل للأعلى -->
+        <!-- 4. القسم الرابع: العداد التنازلي -->
+        <section class="py-14 px-6 text-center space-y-6 flex flex-col items-center bg-[#f4ebdf]">
+            <p data-key="countdown-title" class="text-lg md:text-xl text-[#785E3B] font-ibm font-medium tracking-wide reveal-up">باقٍ على فرحتنا</p>
+
+            <div class="flex justify-center items-center max-w-xs mx-auto my-2 w-full reveal-up delay-100">
+                <div class="flex-1 text-center">
+                    <span id="days" class="block font-numbers text-2xl md:text-3xl text-[#8C6D46] font-normal tracking-tight">40</span>
+                    <span data-key="unit-days" class="text-xs md:text-sm text-[#786452] font-body mt-1 block font-semibold">أيام</span>
+                </div>
+                <div class="w-[1px] h-8 bg-[#CBB89D]/80 my-auto"></div>
+                <div class="flex-1 text-center">
+                    <span id="hours" class="block font-numbers text-2xl md:text-3xl text-[#8C6D46] font-normal tracking-tight">04</span>
+                    <span data-key="unit-hours" class="text-xs md:text-sm text-[#786452] font-body mt-1 block font-semibold">ساعات</span>
+                </div>
+                <div class="w-[1px] h-8 bg-[#CBB89D]/80 my-auto"></div>
+                <div class="flex-1 text-center">
+                    <span id="minutes" class="block font-numbers text-2xl md:text-3xl text-[#8C6D46] font-normal tracking-tight">51</span>
+                    <span data-key="unit-minutes" class="text-xs md:text-sm text-[#786452] font-body mt-1 block font-semibold">دقائق</span>
+                </div>
+                <div class="w-[1px] h-8 bg-[#CBB89D]/80 my-auto"></div>
+                <div class="flex-1 text-center">
+                    <span id="seconds" class="block font-numbers text-2xl md:text-3xl text-[#8C6D46] font-normal tracking-tight">49</span>
+                    <span data-key="unit-seconds" class="text-xs md:text-sm text-[#786452] font-body mt-1 block font-semibold">ثوانٍ</span>
+                </div>
+            </div>
+
+            <div class="pt-2 reveal-up delay-200">
+                <p data-key="countdown-date" class="font-script italic text-2xl md:text-3xl text-[#8C6D46]">الأحد ١ نوفمبر ٢٠٢٦</p>
+            </div>
+
+            <div class="w-20 h-[1.5px] bg-[#CBB89D]/70 mx-auto rounded-full mt-4 reveal-up delay-300"></div>
+        </section>
+
+        <!-- 5. قسم تأكيد الحضور (RSVP) -->
         <section class="py-12 px-6 text-center space-y-6 bg-[#f4ebdf]">
             <div class="space-y-3 flex flex-col items-center reveal-up">
-                <!-- صورة النافورة والزهور فوق تأكيد الحضور -->
-                <img src="fountain-divider.png" alt="نافورة الزهور" class="w-56 md:w-64 h-auto object-contain mb-1 drop-shadow-sm">
-
-                <h3 class="font-script text-3xl text-[#8C6D46]">تأكيد الحضور</h3>
+                <h3 data-key="rsvp-title" class="font-ibm text-lg md:text-xl font-medium text-[#8C6D46]">تأكيد الحضور</h3>
                 <div class="w-12 h-0.5 bg-[#CBB89D]/60 mx-auto rounded-full mt-1"></div>
             </div>
 
-            <p class="text-sm text-[#786452] max-w-xs mx-auto leading-relaxed reveal-up delay-100">
+            <p data-key="rsvp-desc" class="text-sm text-[#786452] max-w-xs mx-auto leading-relaxed reveal-up delay-100">
                 يسعدنا تأكيد حضوركم ليتسنى لنا إتمام التحضيرات واستقبالكم بما يليق بكم.
             </p>
 
-            <!-- نموذج تأكيد الحضور بصورة من الأسفل للأعلى لجميع الخانات والسطور -->
             <form id="rsvp-form" class="max-w-xs mx-auto space-y-4 pt-2 text-right" onsubmit="submitRSVP(event)">
                 <div class="reveal-up delay-200">
-                    <label class="block text-xs font-semibold text-[#6E5637] mb-1">الاسم الكريم</label>
-                    <input type="text" required placeholder="يرجى كتابة الاسم الثلاثي" class="w-full px-4 py-2.5 rounded-xl bg-[#f8f3eb] border border-[#d2c4b1] text-sm text-[#4A3E3D] focus:outline-none focus:border-[#8C6D46] transition-colors">
+                    <label data-key="label-name" class="block text-xs font-semibold text-[#6E5637] mb-1">الاسم الكريم</label>
+                    <input id="input-name" type="text" required placeholder="يرجى كتابة الاسم الثلاثي" class="w-full px-4 py-2.5 rounded-xl bg-[#f8f3eb] border border-[#d2c4b1] text-sm text-[#4A3E3D] focus:outline-none focus:border-[#8C6D46] transition-colors">
                 </div>
 
                 <div class="reveal-up delay-300">
-                    <label class="block text-xs font-semibold text-[#6E5637] mb-1">حالة الحضور</label>
-                    <select required class="w-full px-4 py-2.5 rounded-xl bg-[#f8f3eb] border border-[#d2c4b1] text-sm text-[#4A3E3D] focus:outline-none focus:border-[#8C6D46] transition-colors">
-                        <option value="" disabled selected>اختر الإجابة</option>
-                        <option value="yes">يشرفني الحضور بكل سرور</option>
-                        <option value="no">أعتذر لعدم التمكن من الحضور</option>
+                    <label data-key="label-status" class="block text-xs font-semibold text-[#6E5637] mb-1">حالة الحضور</label>
+                    <select id="select-status" required class="w-full px-4 py-2.5 rounded-xl bg-[#f8f3eb] border border-[#d2c4b1] text-sm text-[#4A3E3D] focus:outline-none focus:border-[#8C6D46] transition-colors">
+                        <option value="" disabled selected data-key="opt-select">اختر الإجابة</option>
+                        <option value="yes" data-key="opt-yes">يشرفني الحضور بكل سرور</option>
+                        <option value="no" data-key="opt-no">أعتذر لعدم التمكن من الحضور</option>
                     </select>
                 </div>
 
                 <div class="reveal-up delay-400">
-                    <label class="block text-xs font-semibold text-[#6E5637] mb-1">عدد المرافقين</label>
+                    <label data-key="label-guests" class="block text-xs font-semibold text-[#6E5637] mb-1">عدد المرافقين</label>
                     <input type="number" min="0" max="5" value="0" class="w-full px-4 py-2.5 rounded-xl bg-[#f8f3eb] border border-[#d2c4b1] text-sm text-[#4A3E3D] focus:outline-none focus:border-[#8C6D46] transition-colors">
                 </div>
 
                 <div class="reveal-up delay-500">
-                    <button type="submit" class="w-full py-3 px-6 mt-2 rounded-xl bg-[#8C6D46] text-white text-sm font-semibold shadow-md hover:bg-[#735836] active:scale-95 transition-all">
+                    <button id="btn-submit-rsvp" type="submit" data-key="btn-rsvp" class="w-full py-3 px-6 mt-2 rounded-xl bg-[#8C6D46] text-white text-sm font-semibold shadow-md hover:bg-[#735836] active:scale-95 transition-all">
                         إرسال التأكيد
                     </button>
                 </div>
             </form>
 
-            <div id="rsvp-message" class="hidden text-sm font-semibold text-[#8C6D46] pt-2">
+            <div id="rsvp-message" data-key="rsvp-success-msg" class="hidden text-sm font-semibold text-[#8C6D46] pt-2">
                 شكراً لكم! تم استلام ردكم بنجاح.
             </div>
         </section>
 
-        <!-- 7. قسم مشاركة مع ظهور جميع السطور والخانات من الأسفل للأعلى -->
+        <!-- 6. قسم مشاركة -->
         <section class="py-12 px-6 text-center space-y-5 bg-[#f4ebdf]">
             <div class="space-y-3 flex flex-col items-center reveal-up">
-                <h3 class="font-script text-3xl text-[#8C6D46]">مشاركة</h3>
+                <h3 data-key="gift-title" class="font-ibm text-lg md:text-xl font-medium text-[#8C6D46]">مشاركة</h3>
                 <div class="w-12 h-0.5 bg-[#CBB89D]/60 mx-auto rounded-full"></div>
             </div>
 
-            <!-- النصوص التعريفية للقسم تظهر متتابعة من الأسفل -->
             <div class="space-y-1">
-                <p class="text-base font-semibold text-[#5C4D4A] reveal-up delay-100">حضوركم أثمن هدية،</p>
-                <p class="text-sm text-[#786452] reveal-up delay-200">لكل من حابب يشارك</p>
-                <p class="text-xs text-[#8C6D46] font-medium pt-1 reveal-up delay-300">رقم الحساب داخل الختم</p>
+                <p data-key="gift-line1" class="text-base font-semibold text-[#5C4D4A] reveal-up delay-100">حضوركم أثمن هدية،</p>
+                <p data-key="gift-line2" class="text-sm text-[#786452] reveal-up delay-200">لكل من حابب يشارك</p>
+                <p data-key="gift-line3" class="text-xs text-[#8C6D46] font-medium pt-1 reveal-up delay-300">رقم الحساب داخل الختم</p>
             </div>
 
-            <!-- صورة الختم الشمعي والسهم يظهران من الأسفل -->
+            <!-- الختم الشمعي -->
             <div class="pt-2 flex flex-col items-center reveal-up delay-400">
                 <div class="relative group cursor-pointer" onclick="toggleAccountDetails()">
                     <img src="wax-seal.png" alt="الختم الشمعي - أحمد ودانا" class="w-40 md:w-44 h-auto object-contain mx-auto drop-shadow-md transition-transform duration-300 group-hover:scale-105 active:scale-95">
                 </div>
 
-                <!-- نص وسهم توجيهي ينبض للأعلى وللأسفل -->
                 <div class="flex flex-col items-center gap-1 mt-3 text-[#8C6D46] cursor-pointer" onclick="toggleAccountDetails()">
-                    <span class="text-xs font-semibold tracking-wide">اضغط هنا</span>
+                    <span data-key="click-here" class="text-xs font-semibold tracking-wide">اضغط هنا</span>
                     <svg class="w-4 h-4 animate-bounce-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"></path>
                     </svg>
                 </div>
 
-                <!-- بطاقة إظهار رقم الحساب التفاعلية عند الضغط على الختم -->
+                <!-- بطاقة رقم الحساب -->
                 <div id="account-card" class="hidden mt-4 p-4 rounded-2xl bg-[#f8f3eb] border border-[#d2c4b1] shadow-sm max-w-xs w-full text-center space-y-2 transition-all">
-                    <p class="text-xs text-[#786452] font-semibold">رقم الحساب البنكي (IBAN)</p>
-                    <p id="iban-text" class="font-numbers text-sm text-[#4A3E3D] font-bold tracking-wider dir-ltr select-all">AE12 3456 7890 1234 5678 901</p>
-                    <button onclick="copyIBAN()" class="text-xs text-[#8C6D46] hover:text-[#735836] font-semibold underline underline-offset-2 transition-colors pt-1">
+                    <p data-key="iban-label" class="text-xs text-[#786452] font-semibold">رقم الحساب البنكي (IBAN)</p>
+                    <p id="iban-text" class="font-numbers text-sm text-[#4A3E3D] font-bold tracking-wider dir-ltr select-all">AE240351361033731278029</p>
+                    <button onclick="copyIBAN()" data-key="copy-btn" class="text-xs text-[#8C6D46] hover:text-[#735836] font-semibold underline underline-offset-2 transition-colors pt-1">
                         نسخ رقم الحساب
                     </button>
-                    <p id="copy-success" class="hidden text-[10px] text-emerald-700 font-semibold">تم النسخ بنجاح!</p>
+                    <p id="copy-success" data-key="copy-success-msg" class="hidden text-[10px] text-emerald-700 font-semibold">تم النسخ بنجاح!</p>
                 </div>
             </div>
         </section>
 
-        <!-- 8. القسم الأخير: بمحبة مع تأثير كتابة الجملة بشكل بطيء من اليمين لليسار -->
-        <section class="py-16 px-6 text-center space-y-6 bg-gradient-to-t from-[#ebdcc9] to-[#f4ebdf]">
-            <h3 class="font-script text-4xl text-[#8C6D46] reveal-up">بمحبة</h3>
+        <!-- 7. القسم الأخير: بمحبة -->
+        <section class="py-16 px-6 text-center space-y-6 bg-gradient-to-t from-[#ebdcc9] to-[#f4ebdf] flex flex-col items-center">
+            <h3 data-key="with-love-title" class="font-ibm text-lg md:text-xl font-medium text-[#8C6D46] reveal-up">بمحبة</h3>
             
-            <!-- السطر المستهدف بتأثير الكتابة البطيئة -->
-            <div class="min-h-[2.5rem] flex items-center justify-center">
+            <div class="w-24 h-[1px] bg-[#A6865D]/60 my-2 reveal-up delay-100"></div>
+
+            <div class="w-full max-w-xs px-2 py-2 reveal-up delay-200">
+                <img src="venue-illustration.png" alt="رسم توضيحي للمكان" class="w-full h-auto object-contain mx-auto">
+            </div>
+
+            <div class="min-h-[2.5rem] flex items-center justify-center pt-2">
                 <p id="typing-quote" class="text-xl font-script text-[#5C4D4A] leading-relaxed inline-block"></p>
             </div>
 
-            <div class="pt-6 space-y-2 reveal-up delay-300">
-                <div class="font-script text-3xl text-[#8C6D46]">أحمد & دانا</div>
-                <p class="text-xs text-[#8C7A6B] tracking-widest">١ نوفمبر ٢٠٢٦</p>
+            <div class="pt-4 space-y-4 reveal-up delay-300">
+                <div data-key="footer-names" class="font-script text-5xl md:text-6xl text-[#8C6D46] font-bold tracking-wide">
+                    أحمد <span class="text-4xl md:text-5xl font-normal">&</span> دانا
+                </div>
+                <p class="font-numbers text-sm text-[#8C7A6B] tracking-[0.3em] font-medium dir-ltr">
+                    01 · 11 · 2026
+                </p>
             </div>
         </section>
 
     </main>
 
-    <!-- ==================== JavaScript لتفاعل الصفحة والحركات ==================== -->
+    <!-- ==================== JavaScript للتفاعل ولإدارة اللغات ==================== -->
     <script>
-        // 1. التفاعل عند فتح المظروف
+        // قاموس الترجمة الكامل (العربية / الإنجليزية)
+        const translations = {
+            ar: {
+                bismillah: "بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ",
+                quranVerse: "﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ﴾",
+                quranSurah: "سورة الروم، الآية (21)",
+                welcomeTitle: "بكل الحب والفرح،",
+                welcomeText: "يسرّنا أن نشارككم بداية أجمل فصول حياتنا،<br>وأن تكونوا معنا لنحتفل بيوم زفافنا.",
+                weddingTitle: "حفل زفاف",
+                couplesNames: 'أحمد <span class="text-3xl md:text-4xl px-2 font-normal">و</span> دانا',
+                eventDetailsTitle: "تفاصيل الحفل",
+                dateLabel: "التاريخ",
+                dateVal: "الأحد ١ نوفمبر ٢٠٢٦",
+                venueLabel: "المكان",
+                venueVal: "بالاتزو فيرساتشي دبي",
+                timeLabel: "الوقت",
+                timeVal: "٧:٠٠ مساءً",
+                locationAddress: "الجداف، واجهة الجداف المائية، دبي",
+                mapBtn: "افتح على الخريطة",
+                countdownTitle: "باقٍ على فرحتنا",
+                unitDays: "أيام",
+                unitHours: "ساعات",
+                unitMinutes: "دقائق",
+                unitSeconds: "ثوانٍ",
+                countdownDate: "الأحد ١ نوفمبر ٢٠٢٦",
+                rsvpTitle: "تأكيد الحضور",
+                rsvpDesc: "يسعدنا تأكيد حضوركم ليتسنى لنا إتمام التحضيرات واستقبالكم بما يليق بكم.",
+                labelName: "الاسم الكريم",
+                inputNamePlaceholder: "يرجى كتابة الاسم الثلاثي",
+                labelStatus: "حالة الحضور",
+                optSelect: "اختر الإجابة",
+                optYes: "يشرفني الحضور بكل سرور",
+                optNo: "أعتذر لعدم التمكن من الحضور",
+                labelGuests: "عدد المرافقين",
+                btnRsvp: "إرسال التأكيد",
+                rsvpSuccessMsg: "شكراً لكم! تم استلام ردكم بنجاح.",
+                giftTitle: "مشاركة",
+                giftLine1: "حضوركم أثمن هدية،",
+                giftLine2: "لكل من حابب يشارك",
+                giftLine3: "رقم الحساب داخل الختم",
+                clickHere: "اضغط هنا",
+                ibanLabel: "رقم الحساب البنكي (IBAN)",
+                copyBtn: "نسخ رقم الحساب",
+                copySuccessMsg: "تم النسخ بنجاح!",
+                withLoveTitle: "بمحبة",
+                typingQuoteText: '"حضوركم يشرّفنا ويزيّن فرحتنا"',
+                footerNames: 'أحمد <span class="text-4xl md:text-5xl font-normal">&</span> دانا'
+            },
+            en: {
+                bismillah: "In the Name of Allah, the Most Gracious, the Most Merciful",
+                quranVerse: "“And among His Signs is this, that He created for you mates from among yourselves, that ye may dwell in tranquility with them, and He has put love and mercy between your (hearts).”",
+                quranSurah: "Surah Ar-Rum [30:21]",
+                welcomeTitle: "With Love & Joy,",
+                welcomeText: "We are delighted to share the beginning of our new chapter<br>and celebrate our wedding day with you.",
+                weddingTitle: "THE WEDDING OF",
+                couplesNames: 'Ahmed <span class="font-en-serif text-3xl md:text-4xl px-2 font-light">&</span> Dana',
+                eventDetailsTitle: "Wedding Details",
+                dateLabel: "Date",
+                dateVal: "Sunday, Nov 1, 2026",
+                venueLabel: "Venue",
+                venueVal: "Palazzo Versace Dubai",
+                timeLabel: "Time",
+                timeVal: "7:00 PM",
+                locationAddress: "Al Jaddaf, Jaddaf Waterfront, Dubai",
+                mapBtn: "Open in Google Maps",
+                countdownTitle: "Counting Down to Our Big Day",
+                unitDays: "Days",
+                unitHours: "Hours",
+                unitMinutes: "Mins",
+                unitSeconds: "Secs",
+                countdownDate: "Sunday, 1st November 2026",
+                rsvpTitle: "RSVP",
+                rsvpDesc: "Please confirm your attendance so we can make the necessary preparations to welcome you.",
+                labelName: "Full Name",
+                inputNamePlaceholder: "Please enter your full name",
+                labelStatus: "Attendance Status",
+                optSelect: "Select an option",
+                optYes: "Joyfully Accepts",
+                optNo: "Regretfully Declines",
+                labelGuests: "Number of Guests",
+                btnRsvp: "Submit RSVP",
+                rsvpSuccessMsg: "Thank you! Your response has been received.",
+                giftTitle: "Gifts & Registry",
+                giftLine1: "Your presence is our greatest gift,",
+                giftLine2: "For those who wish to contribute",
+                giftLine3: "Account details are inside the seal",
+                clickHere: "Click Here",
+                ibanLabel: "Bank Account (IBAN)",
+                copyBtn: "Copy IBAN",
+                copySuccessMsg: "Copied successfully!",
+                withLoveTitle: "With Love",
+                typingQuoteText: '"Your presence will honor us and light up our celebration"',
+                footerNames: 'Ahmed <span class="font-en-serif text-4xl md:text-5xl font-light">&</span> Dana'
+            }
+        };
+
+        let currentLang = 'ar';
+
+        // دالة تبديل اللغة
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const html = document.documentElement;
+            const langCircle = document.getElementById('lang-circle');
+            const langText = document.getElementById('lang-text');
+            const rsvpForm = document.getElementById('rsvp-form');
+
+            // تعديل اتجاه الصفحات واللغة
+            if (currentLang === 'en') {
+                html.setAttribute('dir', 'ltr');
+                html.setAttribute('lang', 'en');
+                langCircle.style.transform = 'translateX(40px)';
+                langText.innerText = 'AR';
+                rsvpForm.classList.remove('text-right');
+                rsvpForm.classList.add('text-left');
+            } else {
+                html.setAttribute('dir', 'rtl');
+                html.setAttribute('lang', 'ar');
+                langCircle.style.transform = 'translateX(0px)';
+                langText.innerText = 'EN';
+                rsvpForm.classList.remove('text-left');
+                rsvpForm.classList.add('text-right');
+            }
+
+            updateDOMTexts();
+        }
+
+        // تحديث جميع النصوص في الـ DOM
+        function updateDOMTexts() {
+            const langData = translations[currentLang];
+
+            // تحويل واستبدال العناصر
+            document.querySelector('[data-key="bismillah"]').innerHTML = langData.bismillah;
+            document.querySelector('[data-key="quran-verse"]').innerHTML = langData.quranVerse;
+            document.querySelector('[data-key="quran-surah"]').innerText = langData.quranSurah;
+            document.querySelector('[data-key="welcome-title"]').innerText = langData.welcomeTitle;
+            document.querySelector('[data-key="welcome-text"]').innerHTML = langData.welcomeText;
+            document.querySelector('[data-key="wedding-title"]').innerText = langData.weddingTitle;
+            document.querySelector('[data-key="couples-names"]').innerHTML = langData.couplesNames;
+            document.querySelector('[data-key="event-details-title"]').innerText = langData.eventDetailsTitle;
+            document.querySelector('[data-key="date-label"]').innerText = langData.dateLabel;
+            document.querySelector('[data-key="date-val"]').innerText = langData.dateVal;
+            document.querySelector('[data-key="venue-label"]').innerText = langData.venueLabel;
+            document.querySelector('[data-key="venue-val"]').innerText = langData.venueVal;
+            document.querySelector('[data-key="time-label"]').innerText = langData.timeLabel;
+            document.querySelector('[data-key="time-val"]').innerText = langData.timeVal;
+            document.querySelector('[data-key="location-address"]').innerText = langData.locationAddress;
+            document.querySelector('[data-key="map-btn"]').innerText = langData.mapBtn;
+            document.querySelector('[data-key="countdown-title"]').innerText = langData.countdownTitle;
+            document.querySelector('[data-key="unit-days"]').innerText = langData.unitDays;
+            document.querySelector('[data-key="unit-hours"]').innerText = langData.unitHours;
+            document.querySelector('[data-key="unit-minutes"]').innerText = langData.unitMinutes;
+            document.querySelector('[data-key="unit-seconds"]').innerText = langData.unitSeconds;
+            document.querySelector('[data-key="countdown-date"]').innerText = langData.countdownDate;
+            document.querySelector('[data-key="rsvp-title"]').innerText = langData.rsvpTitle;
+            document.querySelector('[data-key="rsvp-desc"]').innerText = langData.rsvpDesc;
+            document.querySelector('[data-key="label-name"]').innerText = langData.labelName;
+            document.getElementById('input-name').placeholder = langData.inputNamePlaceholder;
+            document.querySelector('[data-key="label-status"]').innerText = langData.labelStatus;
+            document.querySelector('[data-key="opt-select"]').innerText = langData.optSelect;
+            document.querySelector('[data-key="opt-yes"]').innerText = langData.optYes;
+            document.querySelector('[data-key="opt-no"]').innerText = langData.optNo;
+            document.querySelector('[data-key="label-guests"]').innerText = langData.labelGuests;
+            document.querySelector('[data-key="btn-rsvp"]').innerText = langData.btnRsvp;
+            document.querySelector('[data-key="rsvp-success-msg"]').innerText = langData.rsvpSuccessMsg;
+            document.querySelector('[data-key="gift-title"]').innerText = langData.giftTitle;
+            document.querySelector('[data-key="gift-line1"]').innerText = langData.giftLine1;
+            document.querySelector('[data-key="gift-line2"]').innerText = langData.giftLine2;
+            document.querySelector('[data-key="gift-line3"]').innerText = langData.giftLine3;
+            document.querySelector('[data-key="click-here"]').innerText = langData.clickHere;
+            document.querySelector('[data-key="iban-label"]').innerText = langData.ibanLabel;
+            document.querySelector('[data-key="copy-btn"]').innerText = langData.copyBtn;
+            document.querySelector('[data-key="copy-success-msg"]').innerText = langData.copySuccessMsg;
+            document.querySelector('[data-key="with-love-title"]').innerText = langData.withLoveTitle;
+            document.querySelector('[data-key="footer-names"]').innerHTML = langData.footerNames;
+
+            // إعادة تشغيل تأثير الكتابة للسطر الأخير باللغة الجديدة
+            const quoteEl = document.getElementById('typing-quote');
+            if (quoteEl) {
+                quoteEl.innerText = '';
+                quoteEl.dataset.typed = "false";
+                startTypingEffect(quoteEl, langData.typingQuoteText);
+            }
+        }
+
+        // 1. فتح المظروف
         function openEnvelope() {
             const envelopeImg = document.getElementById('envelope-img');
             const envelopeVideo = document.getElementById('envelope-video');
             const envelopePage = document.getElementById('envelope-page');
             const mainContent = document.getElementById('main-content');
+            const bgMusic = document.getElementById('bg-music');
+
+            if (bgMusic) {
+                bgMusic.play().catch(error => {
+                    console.log("تشغيل الصوت يتطلب تفاعل المستخدم:", error);
+                });
+            }
 
             envelopeImg.classList.add('hidden');
             envelopeVideo.classList.remove('hidden');
-
             envelopeVideo.play();
 
             setTimeout(() => {
@@ -449,13 +584,12 @@
                     envelopePage.style.display = 'none';
                     mainContent.classList.remove('opacity-0');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                    // إطلاق مراقب الحركة بعد فتح الدعوة
                     initScrollObserver();
                 }, 1000);
             }, 3000);
         }
 
-        // 2. كود العداد التنازلي
+        // 2. العداد التنازلي
         const targetDate = new Date("November 1, 2026 19:00:00").getTime();
 
         function updateCountdown() {
@@ -483,7 +617,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // 3. التفاعل مع نموذج تأكيد الحضور
+        // 3. نموذج تأكيد الحضور
         function submitRSVP(event) {
             event.preventDefault();
             const form = document.getElementById('rsvp-form');
@@ -493,7 +627,7 @@
             message.classList.remove('hidden');
         }
 
-        // 4. التفاعل مع الختم الشمعي وإظهار رقم الحساب
+        // 4. الختم الشمعي
         function toggleAccountDetails() {
             const accountCard = document.getElementById('account-card');
             accountCard.classList.toggle('hidden');
@@ -510,7 +644,7 @@
             });
         }
 
-        // 5. محرك مراقبة التمرير لإطلاق تأثيرات الظهور عند الوصول إليها
+        // 5. مراقبة التمرير للانيميشن
         function initScrollObserver() {
             const observerOptions = {
                 root: null,
@@ -523,21 +657,20 @@
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
 
-                        // تشغيل تأثير الكتابة البطيئة في الخاتمة عند رؤيتها
-                        if (entry.target.id === 'typing-quote' && !entry.target.dataset.typed) {
+                        if (entry.target.id === 'typing-quote' && entry.target.dataset.typed !== "true") {
                             entry.target.dataset.typed = "true";
-                            startTypingEffect(entry.target, '"حضوركم يشرّفنا ويزيّن فرحتنا"');
+                            const langText = translations[currentLang].typingQuoteText;
+                            startTypingEffect(entry.target, langText);
                         }
                     }
                 });
             }, observerOptions);
 
-            // تجميع وتتبع كافة العناصر التي تحتوي على تأثير الحركة
-            const elementsToAnimate = document.querySelectorAll('.reveal-fade, .reveal-up, .reveal-left, .reveal-right, #typing-quote');
+            const elementsToAnimate = document.querySelectorAll('.reveal-fade, .reveal-up, #typing-quote');
             elementsToAnimate.forEach(el => observer.observe(el));
         }
 
-        // 6. تأثير كتابة النص بطريقة بطيئة من اليمين إلى اليسار
+        // 6. تأثير الكتابة
         function startTypingEffect(element, text) {
             let index = 0;
             element.innerText = '';
@@ -547,7 +680,7 @@
                 if (index < text.length) {
                     element.innerText += text.charAt(index);
                     index++;
-                    setTimeout(typeNextChar, 110); // سرعة الكتابة بالمللي ثانية (بطيئة وأنيقة)
+                    setTimeout(typeNextChar, 100);
                 } else {
                     setTimeout(() => {
                         element.classList.remove('typing-cursor');
