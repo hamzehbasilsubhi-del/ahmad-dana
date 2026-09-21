@@ -111,10 +111,10 @@
         </button>
     </div>
 
-    <!-- ==================== الصفحة الأولى: المظروف التفاعلي ==================== -->
-    <div id="envelope-page" class="fixed inset-0 z-50 bg-[#f4ebdf] flex flex-col items-center justify-center p-4 transition-opacity duration-1000">
-        <div class="w-full max-w-sm aspect-9-16 relative rounded-2xl overflow-hidden shadow-2xl cursor-pointer group border border-[#e2d5c3]" onclick="openEnvelope()">
-            <!-- صورة المظروف الثابتة -->
+    <!-- ==================== الصفحة الأولى: المظروف التفاعلي (ملء الشاشة بالكامل) ==================== -->
+    <div id="envelope-page" class="fixed inset-0 z-50 bg-[#f4ebdf] flex flex-col items-center justify-center transition-opacity duration-1000 overflow-hidden">
+        <div class="w-full max-w-md h-full aspect-9-16 relative overflow-hidden cursor-pointer group" onclick="openEnvelope()">
+            <!-- صورة المظروف الثابتة - تغطي الشاشة بالكامل دون أطراف -->
             <img id="envelope-img" src="envelope-thumb.jpg" alt="المظروف" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
             <!-- فيديو فتح المظروف -->
             <video id="envelope-video" class="w-full h-full object-cover hidden" playsinline muted>
