@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة زفاف أحمد ودانا</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700&family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* تعريف الخطوط العربية واللاتينية الفاخرة */
+        .font-script { font-family: 'Aref Ruqaa', serif; }
+        .font-quran { font-family: 'Amiri', serif; }
+        .font-body { font-family: 'Cairo', sans-serif; }
+        .font-numbers { font-family: 'Cinzel', 'Playfair Display', serif; }
+        .font-handwriting { font-family: 'Great Vibes', cursive; }
+
+        /* تخصيص التمرير السلس */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* نسبة العرض للارتفاع 9:16 احترافية */
+        .aspect-9-16 {
+            aspect-ratio: 9 / 16;
+        }
+
+        /* تحسين مظهر خريطة Google */
+        .map-container iframe {
+            border: 0;
+            width: 100%;
+            height: 100%;
+            filter: sepia(20%) contrast(95%) opacity(90%);
+            transition: all 0.5s ease;
+        }
+        .map-container:hover iframe {
+            filter: sepia(0%) contrast(100%) opacity(100%);
+        }
+
+        /* حركة السهم للأعلى وللأسفل ببطء */
+        @keyframes bounceSlow {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+        .animate-bounce-slow {
+            animation: bounceSlow 2s infinite ease-in-out;
+        }
+
+        /* ==================== أنماط التأثيرات الحركية عند التمرير ==================== */
+        
+        /* 1. تأثير الظهور التدريجي Fade In */
+        .reveal-fade {
+            opacity: 0;
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-fade.active {
+            opacity: 1;
+        }
+
+        /* 2. تأثير الظهور من الأسفل للأعلى Fade In Up */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 3. تأثير الانزلاق الأفقي من اليسار */
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* 4. تأثير الانزلاق الأفقي من اليمين */
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* تأخيرات زمنية للظهور المتتابع */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+        .delay-500 { transition-delay: 500ms; }
+        .delay-600 { transition-delay: 600ms; }
+
+        /* مؤشر الكتابة للسطر الأخير */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 0.8s infinite;
+            color: #8C6D46;
+            margin-right: 2px;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-[#f4ebdf] text-[#4A3E3D] font-body selection:bg-[#D4AF37] selection:text-white min-h-screen">
+
+    <!-- ==================== الصفحة الأولى: المظروف التفاعلي ==================== -->
+    <div id="envelope-page" class="fixed inset-0 z-50 bg-[#f4ebdf] flex flex-col items-center justify-center p-4 transition-opacity duration-1000">
+        <div class="w-full max-w-sm aspect-9-16 relative rounded-2xl overflow-hidden shadow-2xl cursor-pointer group border border-[#e2d5c3]" onclick="openEnvelope()">
+            
+            <!-- صورة المظروف الثابتة (قبل الضغط) -->
+            <img id="envelope-img" src="envelope-thumb.jpg" alt="المظروف" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+            
+            <!-- فيديو فتح المظروف (يعمل عند الضغط) -->
+            <video id="envelope-video" class="w-full h-full object-cover hidden" playsinline muted>
+                <source src="envelope-opening.mp4" type="video/mp4">
+                متصفحك لا يدعم تشغيل الفيديو.
+            </video>
+        </div>
+    </div>
+
+    <!-- ==================== الصفحة الرئيسية للدعوة ==================== -->
+    <main id="main-content" class="max-w-md mx-auto relative bg-[#f4ebdf] shadow-2xl opacity-0 transition-opacity duration-1000 min-h-screen">
+
+        <!-- 1. القسم الأول: البانر الرئيسي -->
+        <section class="relative w-full aspect-9-16 flex flex-col items-center justify-center text-center px-6 overflow-hidden text-[#fdfeef]">
+            <!-- صورة خلفية البانر -->
+            <img src="main-banner.jpg" alt="خلفية الدعوة" class="absolute inset-0 w-full h-full object-cover">
+
+            <!-- المحتوى المجمع في المنتصف -->
+            <div class="relative z-10 w-full my-auto space-y-6">
+                <!-- الجزء العلوي: البسملة والآية -->
+                <div class="space-y-4">
+                    <p class="font-quran text-lg md:text-xl text-[#fdfeef]">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ</p>
+                    
+                    <p class="font-quran text-base md:text-lg leading-relaxed text-[#fdfeef] px-2">
+                        ﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ﴾
+                    </p>
+                    <span class="block text-xs font-light text-[#fdfeef]/90">سورة الروم، الآية (21)</span>
+                </div>
+
+                <!-- الفاصل المرجعي المرفق -->
+                <div class="flex justify-center py-2">
+                    <img src="divider.png" alt="فاصل" class="w-48 md:w-56 h-auto object-contain">
+                </div>
+
+                <!-- الجزء السفلي: النص الترحيبي -->
+                <div class="space-y-3">
+                    <p class="font-script text-xl md:text-2xl text-[#fdfeef]">بكل الحب والفرح،</p>
+                    <p class="text-sm md:text-base leading-relaxed text-[#fdfeef] px-4 font-light">
+                        يسرّنا أن نشارككم بداية أجمل فصول حياتنا،<br>وأن تكونوا معنا لنحتفل بيوم زفافنا.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. القسم الثاني: فيديو خلفية مع اسم العروسين -->
+        <section class="relative w-full aspect-9-16 flex items-start justify-center text-center overflow-hidden pt-20">
+            <!-- فيديو الخلفية -->
+            <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
+                <source src="couples-video.mp4" type="video/mp4">
+            </video>
+
+            <!-- طبقة دمج ناعمة للوصل بين الأقسام دون حدود -->
+            <div class="absolute inset-0 bg-gradient-to-t from-[#f4ebdf] via-[#f4ebdf]/30 to-[#f4ebdf]"></div>
+
+            <div class="relative z-10 space-y-8 px-4">
+                <!-- ظهور تدريجي لعنوان حفل زفاف -->
+                <h2 class="font-script text-3xl md:text-4xl text-[#4A3B32] font-bold tracking-widest drop-shadow-sm reveal-fade">حفل زفاف</h2>
+                
+                <!-- ظهور تدريجي لأسماء العروسين بتأخير بسيط -->
+                <div class="font-script text-6xl md:text-7xl text-[#2C221E] font-bold drop-shadow-md py-2 leading-tight reveal-fade delay-300">
+                    أحمد <span class="text-4xl md:text-5xl text-[#5A473E]">&</span> دانا
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. القسم الثالث: موعد الحفل والعداد التنازلي -->
+        <section class="py-12 px-6 text-center space-y-8 bg-[#f4ebdf]">
+            <div class="space-y-3 flex flex-col items-center">
+                <!-- الفاصل الزخرفي فوق موعد الحفل -->
+                <img src="date-divider.png" alt="فاصل موعد الحفل" class="w-48 md:w-56 h-auto object-contain mb-1">
+                
+                <h3 class="font-script text-3xl text-[#8C6D46]">موعد الحفل</h3>
+            </div>
+
+            <!-- تفاصيل التاريخ والوقت -->
+            <div class="space-y-2 text-lg text-[#5C4D4A]">
+                <p class="font-semibold text-xl text-[#785E3B]">الأحد ١ نوفمبر ٢٠٢٦</p>
+                <p class="text-base text-[#786452]">الساعة ٧:٠٠ مساءً</p>
+            </div>
+
+            <!-- العداد التنازلي مع ظهور كل خانة تلو الأخرى -->
+            <div class="pt-6 space-y-6">
+                <!-- عنوان العداد -->
+                <p class="text-xl md:text-2xl text-[#785E3B] font-script">باقٍ على فرحتنا</p>
+
+                <!-- أرقام العداد متسلسلة الظهور -->
+                <div class="flex justify-center items-center max-w-xs mx-auto my-4 dir-rtl">
+                    <!-- أيام -->
+                    <div class="flex-1 text-center reveal-fade delay-100">
+                        <span id="days" class="block font-numbers text-4xl md:text-5xl text-[#8C6D46] font-normal tracking-tight">00</span>
+                        <span class="text-sm text-[#786452] font-body mt-2 block">أيام</span>
+                    </div>
+
+                    <!-- فاصل عمودي -->
+                    <div class="w-px h-12 bg-[#CBB89D]/70 my-auto reveal-fade delay-200"></div>
+
+                    <!-- ساعات -->
+                    <div class="flex-1 text-center reveal-fade delay-200">
+                        <span id="hours" class="block font-numbers text-4xl md:text-5xl text-[#8C6D46] font-normal tracking-tight">00</span>
+                        <span class="text-sm text-[#786452] font-body mt-2 block">ساعات</span>
+                    </div>
+
+                    <!-- فاصل عمودي -->
+                    <div class="w-px h-12 bg-[#CBB89D]/70 my-auto reveal-fade delay-300"></div>
+
+                    <!-- دقائق -->
+                    <div class="flex-1 text-center reveal-fade delay-300">
+                        <span id="minutes" class="block font-numbers text-4xl md:text-5xl text-[#8C6D46] font-normal tracking-tight">00</span>
+                        <span class="text-sm text-[#786452] font-body mt-2 block">دقائق</span>
+                    </div>
+
+                    <!-- فاصل عمودي -->
+                    <div class="w-px h-12 bg-[#CBB89D]/70 my-auto reveal-fade delay-400"></div>
+
+                    <!-- ثوانٍ -->
+                    <div class="flex-1 text-center reveal-fade delay-400">
+                        <span id="seconds" class="block font-numbers text-4xl md:text-5xl text-[#8C6D46] font-normal tracking-tight">00</span>
+                        <span class="text-sm text-[#786452] font-body mt-2 block">ثوانٍ</span>
+                    </div>
+                </div>
+
+                <!-- التاريخ بالخط الذهبي المكتوب تحت العداد -->
+                <p class="font-script text-2xl text-[#8C6D46] pt-2">الأحد ١ نوفمبر ٢٠٢٦</p>
+                
+                <!-- خط فاصل ناعم -->
+                <div class="w-16 h-0.5 bg-[#CBB89D]/50 mx-auto rounded-full"></div>
+            </div>
+        </section>
+
+        <!-- 4. القسم الرابع: موقع الحفل والخريطة -->
+        <section class="py-12 px-6 text-center space-y-6 bg-[#f4ebdf]">
+            <div class="space-y-3 flex flex-col items-center">
+                <!-- صورة فاصل موقع الحفل فوق العنوان -->
+                <img src="location-divider.png" alt="فاصل موقع الحفل" class="w-48 md:w-56 h-auto object-contain mb-1">
+                
+                <h3 class="font-script text-3xl text-[#8C6D46]">موقع الحفل</h3>
+                
+                <!-- الخط الفاصل المفصول بمسافة أنيقة أسفل كلمة موقع الحفل -->
+                <div class="w-12 h-0.5 bg-[#CBB89D]/60 mx-auto rounded-full mt-3"></div>
+            </div>
+
+            <p class="text-lg text-[#5C4D4A] font-medium pt-2">بالاتزو فيرساتشي دبي</p>
+
+            <!-- الخريطة -->
+            <div class="w-full h-64 rounded-2xl overflow-hidden shadow-sm border border-[#e2d5c3] map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3609.704207134371!2d55.3378546!3d25.2132179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f6D1F10712A61%3A0x811FB93006A7C6B7!2sPalazzo%20Versace%20Dubai!5e0!3m2!1sen!2sae!4v1700000000000!5m2!1sen!2sae" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+
+            <!-- زر التوجيه للخرائط -->
+            <div class="pt-2">
+                <a href="https://maps.google.com/?q=Palazzo%20Versace%20Dubai" target="_blank" class="inline-flex items-center gap-2 text-sm text-[#8C6D46] hover:text-[#786452] underline underline-offset-4 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span>فتح الموقع في الخريطة</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 5. قسم قواعد اللباس (Dress Code) مع انزلاق أزياء الرجال والنساء متتابعين -->
+        <section class="py-12 px-6 text-center space-y-6 bg-[#f4ebdf]">
+            <div class="space-y-3 flex flex-col items-center">
+                <!-- صورة رسمة العروسين أعلاه -->
+                <img src="couple-illustration.png" alt="رسوم العروسين" class="w-52 md:w-60 h-auto object-contain mb-1 drop-shadow-sm">
+
+                <!-- العنوان بخط يدوي فاخر -->
+                <h3 class="font-handwriting text-5xl md:text-6xl text-[#8C6D46] tracking-wide py-1">Dress Code</h3>
+                <div class="w-12 h-0.5 bg-[#CBB89D]/60 mx-auto rounded-full mt-1"></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto pt-4">
+                <!-- صورة أزياء الرجال (تظهر بانزلاق افقي من اليسار أولاً) -->
+                <div class="flex flex-col items-center space-y-3 reveal-left delay-100">
+                    <div class="w-full aspect-[3/4] p-1.5 rounded-2xl bg-[#f8f3eb] border border-[#d2c4b1] shadow-sm flex items-center justify-center">
+                        <div class="w-full h-full rounded-xl overflow-hidden border border-[#e8ded0]/80">
+                            <img src="men-dress.jpg" alt="Formal" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <span class="font-numbers text-sm font-semibold text-[#6E5637] tracking-wider">Formal</span>
+                </div>
+
+                <!-- صورة أزياء النساء (تظهر بانزلاق افقي من اليمين بعدها) -->
+                <div class="flex flex-col items-center space-y-3 reveal-right delay-300">
+                    <div class="w-full aspect-[3/4] p-1.5 rounded-2xl bg-[#f8f3eb] border border-[#d2c4b1] shadow-sm flex items-center justify-center">
+                        <div class="w-full h-full rounded-xl overflow-hidden border border-[#e8ded0]/80">
+                            <img src="women-dress.jpg" alt="Avoid White Dress" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <span class="font-numbers text-xs font-semibold text-[#6E5637] tracking-tight leading-tight">Avoid White Dress</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. قسم تأكيد الحضور (RSVP) مع ظهور العناصر من الأسفل للأعلى -->
+        <section class="py-12 px-6 text-center space-y-6 bg-[#f4ebdf]">
+            <div class="space-y-3 flex flex-col items-center reveal-up">
+                <!-- صورة النافورة والزهور فوق تأكيد الحضور -->
+                <img src="fountain-divider.png" alt="نافورة الزهور" class="w-56 md:w-64 h-auto object-contain mb-1 drop-shadow-sm">
+
+                <h3 class="font-script text-3xl text-[#8C6D46]">تأكيد الحضور</h3>
+                <div class="w-12 h-0.5 bg-[#CBB89D]/60 mx-auto rounded-full mt-1"></div>
+            </div>
+
+            <p class="text-sm text-[#786452] max-w-xs mx-auto leading-relaxed reveal-up delay-100">
+                يسعدنا تأكيد حضوركم ليتسنى لنا إتمام التحضيرات واستقبالكم بما يليق بكم.
+            </p>
+
+            <!-- نموذج تأكيد الحضور بصورة من الأسفل للأعلى لجميع الخانات والسطور -->
+            <form id="rsvp-form" class="max-w-xs mx-auto space-y-4 pt-2 text-right" onsubmit="submitRSVP(event)">
+                <div class="reveal-up delay-200">
+                    <label class="block text-xs font-semibold text-[#6E5637] mb-1">الاسم الكريم</label>
+                    <input type="text" required placeholder="يرجى كتابة الاسم الثلاثي" class="w-full px-4 py-2.5 rounded-xl bg-[#f8f3eb] border border-[#d2c4b1] text-sm text-[#4A3E3D] focus:outline-none focus:border-[#8C6D46] transition-colors">
+                </div>
+
+                <div class="reveal-up delay-300">
+                    <label class="block text-xs font-semibold text-[#6E5637] mb-1">حالة الحضور</label>
+                    <select required class="w-full px-4 py-2.5 rounded-xl bg-[#f8f3eb] border border-[#d2c4b1] text-sm text-[#4A3E3D] focus:outline-none focus:border-[#8C6D46] transition-colors">
+                        <option value="" disabled selected>اختر الإجابة</option>
+                        <option value="yes">يشرفني الحضور بكل سرور</option>
+                        <option value="no">أعتذر لعدم التمكن من الحضور</option>
+                    </select>
+                </div>
+
+                <div class="reveal-up delay-400">
+                    <label class="block text-xs font-semibold text-[#6E5637] mb-1">عدد المرافقين</label>
+                    <input type="number" min="0" max="5" value="0" class="w-full px-4 py-2.5 rounded-xl bg-[#f8f3eb] border border-[#d2c4b1] text-sm text-[#4A3E3D] focus:outline-none focus:border-[#8C6D46] transition-colors">
+                </div>
+
+                <div class="reveal-up delay-500">
+                    <button type="submit" class="w-full py-3 px-6 mt-2 rounded-xl bg-[#8C6D46] text-white text-sm font-semibold shadow-md hover:bg-[#735836] active:scale-95 transition-all">
+                        إرسال التأكيد
+                    </button>
+                </div>
+            </form>
+
+            <div id="rsvp-message" class="hidden text-sm font-semibold text-[#8C6D46] pt-2">
+                شكراً لكم! تم استلام ردكم بنجاح.
+            </div>
+        </section>
+
+        <!-- 7. قسم مشاركة مع ظهور جميع السطور والخانات من الأسفل للأعلى -->
+        <section class="py-12 px-6 text-center space-y-5 bg-[#f4ebdf]">
+            <div class="space-y-3 flex flex-col items-center reveal-up">
+                <h3 class="font-script text-3xl text-[#8C6D46]">مشاركة</h3>
+                <div class="w-12 h-0.5 bg-[#CBB89D]/60 mx-auto rounded-full"></div>
+            </div>
+
+            <!-- النصوص التعريفية للقسم تظهر متتابعة من الأسفل -->
+            <div class="space-y-1">
+                <p class="text-base font-semibold text-[#5C4D4A] reveal-up delay-100">حضوركم أثمن هدية،</p>
+                <p class="text-sm text-[#786452] reveal-up delay-200">لكل من حابب يشارك</p>
+                <p class="text-xs text-[#8C6D46] font-medium pt-1 reveal-up delay-300">رقم الحساب داخل الختم</p>
+            </div>
+
+            <!-- صورة الختم الشمعي والسهم يظهران من الأسفل -->
+            <div class="pt-2 flex flex-col items-center reveal-up delay-400">
+                <div class="relative group cursor-pointer" onclick="toggleAccountDetails()">
+                    <img src="wax-seal.png" alt="الختم الشمعي - أحمد ودانا" class="w-40 md:w-44 h-auto object-contain mx-auto drop-shadow-md transition-transform duration-300 group-hover:scale-105 active:scale-95">
+                </div>
+
+                <!-- نص وسهم توجيهي ينبض للأعلى وللأسفل -->
+                <div class="flex flex-col items-center gap-1 mt-3 text-[#8C6D46] cursor-pointer" onclick="toggleAccountDetails()">
+                    <span class="text-xs font-semibold tracking-wide">اضغط هنا</span>
+                    <svg class="w-4 h-4 animate-bounce-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"></path>
+                    </svg>
+                </div>
+
+                <!-- بطاقة إظهار رقم الحساب التفاعلية عند الضغط على الختم -->
+                <div id="account-card" class="hidden mt-4 p-4 rounded-2xl bg-[#f8f3eb] border border-[#d2c4b1] shadow-sm max-w-xs w-full text-center space-y-2 transition-all">
+                    <p class="text-xs text-[#786452] font-semibold">رقم الحساب البنكي (IBAN)</p>
+                    <p id="iban-text" class="font-numbers text-sm text-[#4A3E3D] font-bold tracking-wider dir-ltr select-all">AE12 3456 7890 1234 5678 901</p>
+                    <button onclick="copyIBAN()" class="text-xs text-[#8C6D46] hover:text-[#735836] font-semibold underline underline-offset-2 transition-colors pt-1">
+                        نسخ رقم الحساب
+                    </button>
+                    <p id="copy-success" class="hidden text-[10px] text-emerald-700 font-semibold">تم النسخ بنجاح!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. القسم الأخير: بمحبة مع تأثير كتابة الجملة بشكل بطيء من اليمين لليسار -->
+        <section class="py-16 px-6 text-center space-y-6 bg-gradient-to-t from-[#ebdcc9] to-[#f4ebdf]">
+            <h3 class="font-script text-4xl text-[#8C6D46] reveal-up">بمحبة</h3>
+            
+            <!-- السطر المستهدف بتأثير الكتابة البطيئة -->
+            <div class="min-h-[2.5rem] flex items-center justify-center">
+                <p id="typing-quote" class="text-xl font-script text-[#5C4D4A] leading-relaxed inline-block"></p>
+            </div>
+
+            <div class="pt-6 space-y-2 reveal-up delay-300">
+                <div class="font-script text-3xl text-[#8C6D46]">أحمد & دانا</div>
+                <p class="text-xs text-[#8C7A6B] tracking-widest">١ نوفمبر ٢٠٢٦</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== JavaScript لتفاعل الصفحة والحركات ==================== -->
+    <script>
+        // 1. التفاعل عند فتح المظروف
+        function openEnvelope() {
+            const envelopeImg = document.getElementById('envelope-img');
+            const envelopeVideo = document.getElementById('envelope-video');
+            const envelopePage = document.getElementById('envelope-page');
+            const mainContent = document.getElementById('main-content');
+
+            envelopeImg.classList.add('hidden');
+            envelopeVideo.classList.remove('hidden');
+
+            envelopeVideo.play();
+
+            setTimeout(() => {
+                envelopePage.classList.add('opacity-0');
+                setTimeout(() => {
+                    envelopePage.style.display = 'none';
+                    mainContent.classList.remove('opacity-0');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    // إطلاق مراقب الحركة بعد فتح الدعوة
+                    initScrollObserver();
+                }, 1000);
+            }, 3000);
+        }
+
+        // 2. كود العداد التنازلي
+        const targetDate = new Date("November 1, 2026 19:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = days.toString().padStart(2, '0');
+                document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+                document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+                document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+            } else {
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // 3. التفاعل مع نموذج تأكيد الحضور
+        function submitRSVP(event) {
+            event.preventDefault();
+            const form = document.getElementById('rsvp-form');
+            const message = document.getElementById('rsvp-message');
+            
+            form.classList.add('hidden');
+            message.classList.remove('hidden');
+        }
+
+        // 4. التفاعل مع الختم الشمعي وإظهار رقم الحساب
+        function toggleAccountDetails() {
+            const accountCard = document.getElementById('account-card');
+            accountCard.classList.toggle('hidden');
+        }
+
+        function copyIBAN() {
+            const ibanText = document.getElementById('iban-text').innerText;
+            navigator.clipboard.writeText(ibanText).then(() => {
+                const copySuccess = document.getElementById('copy-success');
+                copySuccess.classList.remove('hidden');
+                setTimeout(() => {
+                    copySuccess.classList.add('hidden');
+                }, 2500);
+            });
+        }
+
+        // 5. محرك مراقبة التمرير لإطلاق تأثيرات الظهور عند الوصول إليها
+        function initScrollObserver() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -50px 0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+
+                        // تشغيل تأثير الكتابة البطيئة في الخاتمة عند رؤيتها
+                        if (entry.target.id === 'typing-quote' && !entry.target.dataset.typed) {
+                            entry.target.dataset.typed = "true";
+                            startTypingEffect(entry.target, '"حضوركم يشرّفنا ويزيّن فرحتنا"');
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // تجميع وتتبع كافة العناصر التي تحتوي على تأثير الحركة
+            const elementsToAnimate = document.querySelectorAll('.reveal-fade, .reveal-up, .reveal-left, .reveal-right, #typing-quote');
+            elementsToAnimate.forEach(el => observer.observe(el));
+        }
+
+        // 6. تأثير كتابة النص بطريقة بطيئة من اليمين إلى اليسار
+        function startTypingEffect(element, text) {
+            let index = 0;
+            element.innerText = '';
+            element.classList.add('typing-cursor');
+
+            function typeNextChar() {
+                if (index < text.length) {
+                    element.innerText += text.charAt(index);
+                    index++;
+                    setTimeout(typeNextChar, 110); // سرعة الكتابة بالمللي ثانية (بطيئة وأنيقة)
+                } else {
+                    setTimeout(() => {
+                        element.classList.remove('typing-cursor');
+                    }, 1000);
+                }
+            }
+            typeNextChar();
+        }
+    </script>
+</body>
+</html>
