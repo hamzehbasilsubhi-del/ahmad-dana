@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@300;400;600;700;800&family=Cinzel:wght@400;600;700&family=Great+Vibes&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Reem+Kufi:wght@500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* تعريف الخطوط العربية واللاتينية الفاخرة */
+        /* تعريف الخطوط العربية واللاتينية */
         .font-script { font-family: 'Aref Ruqaa', serif; }
         .font-quran { font-family: 'Amiri', serif; }
         .font-body { font-family: 'Cairo', sans-serif; }
@@ -23,26 +23,14 @@
         .font-en-serif { font-family: 'Playfair Display', serif; }
         .font-en-sans { font-family: 'Montserrat', sans-serif; }
 
-        /* تخصيص التمرير السلس */
+        /* التمرير السلس */
         html {
             scroll-behavior: smooth;
         }
 
-        /* نسبة العرض للارتفاع 9:16 احترافية */
+        /* نسبة العرض للارتفاع 9:16 */
         .aspect-9-16 {
             aspect-ratio: 9 / 16;
-        }
-
-        /* تحسين مظهر خريطة Google */
-        .map-container iframe {
-            border: 0;
-            width: 100%;
-            height: 100%;
-            filter: sepia(20%) contrast(95%) opacity(90%);
-            transition: all 0.5s ease;
-        }
-        .map-container:hover iframe {
-            filter: sepia(0%) contrast(100%) opacity(100%);
         }
 
         /* حركة السهم للأعلى وللأسفل ببطء */
@@ -103,23 +91,27 @@
         <source src="background-music.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- ==================== زر تبديل اللغة (Toggle Switch) المطابق للصورة ==================== -->
-    <div class="fixed top-5 left-5 z-40">
-        <button id="lang-toggle-btn" onclick="toggleLanguage()" class="bg-[#2a1c24]/85 hover:bg-[#2a1c24] border border-[#8C6D46]/40 text-[#d4af37] px-2 py-1.5 rounded-full flex items-center justify-between w-20 shadow-xl transition-all duration-300 backdrop-blur-md cursor-pointer select-none">
-            <span id="lang-circle" class="w-6 h-6 rounded-full border-2 border-[#cbb89d] bg-transparent flex items-center justify-center transition-transform duration-300"></span>
-            <span id="lang-text" class="text-xs font-bold font-numbers px-2 text-[#d4af37]">EN</span>
+    <!-- ==================== زر تبديل اللغة (Toggle Switch) ==================== -->
+    <div class="fixed top-5 left-5 z-40" dir="ltr">
+        <button id="lang-toggle-btn" onclick="toggleLanguage()" class="bg-[#2a1c24]/90 hover:bg-[#2a1c24] border border-[#8C6D46]/50 text-[#d4af37] px-2 py-1.5 rounded-full flex items-center justify-between w-20 h-9 shadow-xl transition-all duration-300 backdrop-blur-md cursor-pointer select-none">
+            <span id="lang-circle" class="w-6 h-6 rounded-full border-2 border-[#cbb89d] bg-[#d4af37]/20 flex items-center justify-center transition-all duration-300 transform translate-x-0"></span>
+            <span id="lang-text" class="text-xs font-bold font-numbers px-1 text-[#d4af37]">EN</span>
         </button>
     </div>
 
-    <!-- ==================== الصفحة الأولى: المظروف التفاعلي (ملء الشاشة بالكامل) ==================== -->
+    <!-- ==================== الواجهة الأولى: الفيديو كواجهة عند الضغط يشتغل مباشرة ==================== -->
     <div id="envelope-page" class="fixed inset-0 z-50 bg-[#f4ebdf] flex flex-col items-center justify-center transition-opacity duration-1000 overflow-hidden">
-        <div class="w-full max-w-md h-full aspect-9-16 relative overflow-hidden cursor-pointer group" onclick="openEnvelope()">
-            <!-- صورة المظروف الثابتة - تغطي الشاشة بالكامل دون أطراف -->
-            <img id="envelope-img" src="envelope-thumb.jpg" alt="المظروف" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-            <!-- فيديو فتح المظروف -->
-            <video id="envelope-video" class="w-full h-full object-cover hidden" playsinline muted>
-                <source src="envelope-opening.mp4" type="video/mp4">
+        <div id="video-wrapper" class="w-full max-w-md h-full aspect-9-16 relative overflow-hidden cursor-pointer group" onclick="startOpeningSequence()">
+            
+            <!-- فيديو المظروف (يعرض الفريم الأول ويشتغل مباشرة عند الضغط) -->
+            <video id="envelope-video" class="w-full h-full object-cover" playsinline muted preload="auto">
+                <source src="envelope-opening.mp4#t=0.001" type="video/mp4">
             </video>
+
+            <!-- نص توضيحي للضغط -->
+            <div id="tap-hint" class="absolute bottom-10 left-1/2 -translate-x-1/2 bg-black/60 text-white text-xs font-semibold px-5 py-2.5 rounded-full backdrop-blur-sm tracking-wide transition-opacity duration-500 animate-pulse pointer-events-none">
+                اضغط لفتح الدعوة
+            </div>
         </div>
     </div>
 
@@ -164,13 +156,15 @@
 
             <div class="absolute inset-0 bg-black/20"></div>
 
-            <div class="relative z-10 space-y-2 px-4 w-full flex flex-col items-center justify-center">
+            <div class="relative z-10 space-y-4 px-4 w-full flex flex-col items-center justify-center">
                 <h2 data-key="wedding-title" class="font-body font-normal text-sm md:text-base text-white tracking-wider drop-shadow-md reveal-fade -translate-y-2">
                     حفل زفاف
                 </h2>
                 
-                <div data-key="couples-names" class="font-script text-5xl md:text-6xl text-white font-bold drop-shadow-lg tracking-wider leading-relaxed reveal-fade delay-200">
-                    أحمد <span class="text-3xl md:text-4xl px-2 font-normal">و</span> دانا
+                <div data-key="couples-names" class="font-script text-3xl md:text-4xl text-white font-bold drop-shadow-lg tracking-wider leading-relaxed reveal-fade delay-200 flex flex-col items-center gap-1">
+                    <span>أحمد مختار</span>
+                    <span class="text-2xl md:text-3xl font-normal py-0.5">&</span>
+                    <span>دانا أبو حويلي</span>
                 </div>
             </div>
         </section>
@@ -240,22 +234,22 @@
 
             <div class="flex justify-center items-center max-w-xs mx-auto my-2 w-full reveal-up delay-100">
                 <div class="flex-1 text-center">
-                    <span id="days" class="block font-numbers text-2xl md:text-3xl text-[#8C6D46] font-normal tracking-tight">40</span>
+                    <span id="days" class="block font-numbers text-2xl md:text-3xl text-[#8C6D46] font-normal tracking-tight">00</span>
                     <span data-key="unit-days" class="text-xs md:text-sm text-[#786452] font-body mt-1 block font-semibold">أيام</span>
                 </div>
                 <div class="w-[1px] h-8 bg-[#CBB89D]/80 my-auto"></div>
                 <div class="flex-1 text-center">
-                    <span id="hours" class="block font-numbers text-2xl md:text-3xl text-[#8C6D46] font-normal tracking-tight">04</span>
+                    <span id="hours" class="block font-numbers text-2xl md:text-3xl text-[#8C6D46] font-normal tracking-tight">00</span>
                     <span data-key="unit-hours" class="text-xs md:text-sm text-[#786452] font-body mt-1 block font-semibold">ساعات</span>
                 </div>
                 <div class="w-[1px] h-8 bg-[#CBB89D]/80 my-auto"></div>
                 <div class="flex-1 text-center">
-                    <span id="minutes" class="block font-numbers text-2xl md:text-3xl text-[#8C6D46] font-normal tracking-tight">51</span>
+                    <span id="minutes" class="block font-numbers text-2xl md:text-3xl text-[#8C6D46] font-normal tracking-tight">00</span>
                     <span data-key="unit-minutes" class="text-xs md:text-sm text-[#786452] font-body mt-1 block font-semibold">دقائق</span>
                 </div>
                 <div class="w-[1px] h-8 bg-[#CBB89D]/80 my-auto"></div>
                 <div class="flex-1 text-center">
-                    <span id="seconds" class="block font-numbers text-2xl md:text-3xl text-[#8C6D46] font-normal tracking-tight">49</span>
+                    <span id="seconds" class="block font-numbers text-2xl md:text-3xl text-[#8C6D46] font-normal tracking-tight">00</span>
                     <span data-key="unit-seconds" class="text-xs md:text-sm text-[#786452] font-body mt-1 block font-semibold">ثوانٍ</span>
                 </div>
             </div>
@@ -348,7 +342,7 @@
             </div>
         </section>
 
-        <!-- 7. القسم الأخير: بمحبة -->
+        <!-- 7. القسم الأخير: بمحبة (تم تعديل أسماء العروسين هنا إلى: أحمد & دانا) -->
         <section class="py-16 px-6 text-center space-y-6 bg-gradient-to-t from-[#ebdcc9] to-[#f4ebdf] flex flex-col items-center">
             <h3 data-key="with-love-title" class="font-ibm text-lg md:text-xl font-medium text-[#8C6D46] reveal-up">بمحبة</h3>
             
@@ -363,8 +357,9 @@
             </div>
 
             <div class="pt-4 space-y-4 reveal-up delay-300">
-                <div data-key="footer-names" class="font-script text-5xl md:text-6xl text-[#8C6D46] font-bold tracking-wide">
-                    أحمد <span class="text-4xl md:text-5xl font-normal">&</span> دانا
+                <!-- تم تخصيص تعديل الاسم في هذا القسم فقط -->
+                <div data-key="footer-names" class="font-script text-4xl md:text-5xl text-[#8C6D46] font-bold tracking-wide">
+                    أحمد <span class="text-3xl md:text-4xl font-normal">&</span> دانا
                 </div>
                 <p class="font-numbers text-sm text-[#8C7A6B] tracking-[0.3em] font-medium dir-ltr">
                     01 · 11 · 2026
@@ -374,9 +369,42 @@
 
     </main>
 
-    <!-- ==================== JavaScript للتفاعل ولإدارة اللغات ==================== -->
+    <!-- ==================== JavaScript ==================== -->
     <script>
-        // قاموس الترجمة الكامل (العربية / الإنجليزية)
+        let isOpening = false;
+
+        function startOpeningSequence() {
+            if (isOpening) return;
+            isOpening = true;
+
+            const envelopeVideo = document.getElementById('envelope-video');
+            const tapHint = document.getElementById('tap-hint');
+            const envelopePage = document.getElementById('envelope-page');
+            const mainContent = document.getElementById('main-content');
+            const bgMusic = document.getElementById('bg-music');
+
+            if (tapHint) tapHint.style.opacity = '0';
+
+            if (bgMusic) {
+                bgMusic.play().catch(error => console.log("الصوت يتطلب تفاعل:", error));
+            }
+
+            envelopeVideo.play().catch(error => {
+                console.log("خطأ في تشغيل الفيديو:", error);
+            });
+
+            envelopeVideo.onended = function() {
+                envelopePage.classList.add('opacity-0');
+                setTimeout(() => {
+                    envelopePage.style.display = 'none';
+                    mainContent.classList.remove('opacity-0');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    initScrollObserver();
+                }, 1000);
+            };
+        }
+
+        // قاموس الترجمة الكامل
         const translations = {
             ar: {
                 bismillah: "بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ",
@@ -385,7 +413,7 @@
                 welcomeTitle: "بكل الحب والفرح،",
                 welcomeText: "يسرّنا أن نشارككم بداية أجمل فصول حياتنا،<br>وأن تكونوا معنا لنحتفل بيوم زفافنا.",
                 weddingTitle: "حفل زفاف",
-                couplesNames: 'أحمد <span class="text-3xl md:text-4xl px-2 font-normal">و</span> دانا',
+                couplesNames: '<span>أحمد مختار</span><span class="text-2xl md:text-3xl font-normal py-0.5">&</span><span>دانا أبو حويلي</span>',
                 eventDetailsTitle: "تفاصيل الحفل",
                 dateLabel: "التاريخ",
                 dateVal: "الأحد ١ نوفمبر ٢٠٢٦",
@@ -395,13 +423,13 @@
                 timeVal: "٧:٠٠ مساءً",
                 locationAddress: "الجداف، واجهة الجداف المائية، دبي",
                 mapBtn: "افتح على الخريطة",
-                countdownTitle: "باقٍ على فرحتنا",
+                countdownTitle: "Until Our Joy",
                 unitDays: "أيام",
                 unitHours: "ساعات",
                 unitMinutes: "دقائق",
                 unitSeconds: "ثوانٍ",
                 countdownDate: "الأحد ١ نوفمبر ٢٠٢٦",
-                rsvpTitle: "تأكيد الحضور",
+                rsvpTitle: "Attendance Confirmation",
                 rsvpDesc: "يسعدنا تأكيد حضوركم ليتسنى لنا إتمام التحضيرات واستقبالكم بما يليق بكم.",
                 labelName: "الاسم الكريم",
                 inputNamePlaceholder: "يرجى كتابة الاسم الثلاثي",
@@ -422,16 +450,16 @@
                 copySuccessMsg: "تم النسخ بنجاح!",
                 withLoveTitle: "بمحبة",
                 typingQuoteText: '"حضوركم يشرّفنا ويزيّن فرحتنا"',
-                footerNames: 'أحمد <span class="text-4xl md:text-5xl font-normal">&</span> دانا'
+                footerNames: 'أحمد <span class="text-3xl md:text-4xl font-normal">&</span> دانا'
             },
             en: {
                 bismillah: "In the Name of Allah, the Most Gracious, the Most Merciful",
-                quranVerse: "“And among His Signs is this, that He created for you mates from among yourselves, that ye may dwell in tranquility with them, and He has put love and mercy between your (hearts).”",
+                quranVerse: "“And one of His signs is that He created for you spouses from among yourselves so that you may find comfort in them. And He has placed between you compassion and mercy. Surely in this are signs for those who reflect.”",
                 quranSurah: "Surah Ar-Rum [30:21]",
                 welcomeTitle: "With Love & Joy,",
                 welcomeText: "We are delighted to share the beginning of our new chapter<br>and celebrate our wedding day with you.",
                 weddingTitle: "THE WEDDING OF",
-                couplesNames: 'Ahmed <span class="font-en-serif text-3xl md:text-4xl px-2 font-light">&</span> Dana',
+                couplesNames: '<span>Ahmed Mokhtar</span><span class="font-en-serif text-2xl md:text-3xl font-light py-0.5">&</span><span>Dana Abu Hawili</span>',
                 eventDetailsTitle: "Wedding Details",
                 dateLabel: "Date",
                 dateVal: "Sunday, Nov 1, 2026",
@@ -441,13 +469,13 @@
                 timeVal: "7:00 PM",
                 locationAddress: "Al Jaddaf, Jaddaf Waterfront, Dubai",
                 mapBtn: "Open in Google Maps",
-                countdownTitle: "Counting Down to Our Big Day",
+                countdownTitle: "Until Our Joy",
                 unitDays: "Days",
                 unitHours: "Hours",
                 unitMinutes: "Mins",
                 unitSeconds: "Secs",
                 countdownDate: "Sunday, 1st November 2026",
-                rsvpTitle: "RSVP",
+                rsvpTitle: "Attendance Confirmation",
                 rsvpDesc: "Please confirm your attendance so we can make the necessary preparations to welcome you.",
                 labelName: "Full Name",
                 inputNamePlaceholder: "Please enter your full name",
@@ -456,7 +484,7 @@
                 optYes: "Joyfully Accepts",
                 optNo: "Regretfully Declines",
                 labelGuests: "Number of Guests",
-                btnRsvp: "Submit RSVP",
+                btnRsvp: "Submit Confirmation",
                 rsvpSuccessMsg: "Thank you! Your response has been received.",
                 giftTitle: "Gifts & Registry",
                 giftLine1: "Your presence is our greatest gift,",
@@ -468,33 +496,39 @@
                 copySuccessMsg: "Copied successfully!",
                 withLoveTitle: "With Love",
                 typingQuoteText: '"Your presence will honor us and light up our celebration"',
-                footerNames: 'Ahmed <span class="font-en-serif text-4xl md:text-5xl font-light">&</span> Dana'
+                footerNames: 'Ahmed <span class="font-en-serif text-3xl md:text-4xl font-light">&</span> Dana'
             }
         };
 
         let currentLang = 'ar';
 
-        // دالة تبديل اللغة
         function toggleLanguage() {
             currentLang = currentLang === 'ar' ? 'en' : 'ar';
             const html = document.documentElement;
             const langCircle = document.getElementById('lang-circle');
             const langText = document.getElementById('lang-text');
+            const langToggleBtn = document.getElementById('lang-toggle-btn');
             const rsvpForm = document.getElementById('rsvp-form');
 
-            // تعديل اتجاه الصفحات واللغة
             if (currentLang === 'en') {
                 html.setAttribute('dir', 'ltr');
                 html.setAttribute('lang', 'en');
-                langCircle.style.transform = 'translateX(40px)';
+                
+                // تحريك الدائرة والتحكم بتموضع العناصر بدقة
+                langToggleBtn.style.flexDirection = 'row-reverse';
+                langCircle.style.transform = 'translateX(0px)';
                 langText.innerText = 'AR';
+                
                 rsvpForm.classList.remove('text-right');
                 rsvpForm.classList.add('text-left');
             } else {
                 html.setAttribute('dir', 'rtl');
                 html.setAttribute('lang', 'ar');
+                
+                langToggleBtn.style.flexDirection = 'row';
                 langCircle.style.transform = 'translateX(0px)';
                 langText.innerText = 'EN';
+                
                 rsvpForm.classList.remove('text-left');
                 rsvpForm.classList.add('text-right');
             }
@@ -502,11 +536,9 @@
             updateDOMTexts();
         }
 
-        // تحديث جميع النصوص في الـ DOM
         function updateDOMTexts() {
             const langData = translations[currentLang];
 
-            // تحويل واستبدال العناصر
             document.querySelector('[data-key="bismillah"]').innerHTML = langData.bismillah;
             document.querySelector('[data-key="quran-verse"]').innerHTML = langData.quranVerse;
             document.querySelector('[data-key="quran-surah"]').innerText = langData.quranSurah;
@@ -551,7 +583,6 @@
             document.querySelector('[data-key="with-love-title"]').innerText = langData.withLoveTitle;
             document.querySelector('[data-key="footer-names"]').innerHTML = langData.footerNames;
 
-            // إعادة تشغيل تأثير الكتابة للسطر الأخير باللغة الجديدة
             const quoteEl = document.getElementById('typing-quote');
             if (quoteEl) {
                 quoteEl.innerText = '';
@@ -560,36 +591,7 @@
             }
         }
 
-        // 1. فتح المظروف
-        function openEnvelope() {
-            const envelopeImg = document.getElementById('envelope-img');
-            const envelopeVideo = document.getElementById('envelope-video');
-            const envelopePage = document.getElementById('envelope-page');
-            const mainContent = document.getElementById('main-content');
-            const bgMusic = document.getElementById('bg-music');
-
-            if (bgMusic) {
-                bgMusic.play().catch(error => {
-                    console.log("تشغيل الصوت يتطلب تفاعل المستخدم:", error);
-                });
-            }
-
-            envelopeImg.classList.add('hidden');
-            envelopeVideo.classList.remove('hidden');
-            envelopeVideo.play();
-
-            setTimeout(() => {
-                envelopePage.classList.add('opacity-0');
-                setTimeout(() => {
-                    envelopePage.style.display = 'none';
-                    mainContent.classList.remove('opacity-0');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    initScrollObserver();
-                }, 1000);
-            }, 3000);
-        }
-
-        // 2. العداد التنازلي
+        // العداد التنازلي
         const targetDate = new Date("November 1, 2026 19:00:00").getTime();
 
         function updateCountdown() {
@@ -617,7 +619,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // 3. نموذج تأكيد الحضور
+        // نموذج الحضور
         function submitRSVP(event) {
             event.preventDefault();
             const form = document.getElementById('rsvp-form');
@@ -627,7 +629,7 @@
             message.classList.remove('hidden');
         }
 
-        // 4. الختم الشمعي
+        // الختم الشمعي
         function toggleAccountDetails() {
             const accountCard = document.getElementById('account-card');
             accountCard.classList.toggle('hidden');
@@ -644,7 +646,7 @@
             });
         }
 
-        // 5. مراقبة التمرير للانيميشن
+        // مراقبة الحركة
         function initScrollObserver() {
             const observerOptions = {
                 root: null,
@@ -670,7 +672,7 @@
             elementsToAnimate.forEach(el => observer.observe(el));
         }
 
-        // 6. تأثير الكتابة
+        // تأثير الكتابة
         function startTypingEffect(element, text) {
             let index = 0;
             element.innerText = '';
