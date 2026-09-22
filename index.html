@@ -342,7 +342,7 @@
             </div>
         </section>
 
-        <!-- 7. القسم الأخير: بمحبة (تم تعديل أسماء العروسين هنا إلى: أحمد & دانا) -->
+        <!-- 7. القسم الأخير: بمحبة -->
         <section class="py-16 px-6 text-center space-y-6 bg-gradient-to-t from-[#ebdcc9] to-[#f4ebdf] flex flex-col items-center">
             <h3 data-key="with-love-title" class="font-ibm text-lg md:text-xl font-medium text-[#8C6D46] reveal-up">بمحبة</h3>
             
@@ -357,7 +357,6 @@
             </div>
 
             <div class="pt-4 space-y-4 reveal-up delay-300">
-                <!-- تم تخصيص تعديل الاسم في هذا القسم فقط -->
                 <div data-key="footer-names" class="font-script text-4xl md:text-5xl text-[#8C6D46] font-bold tracking-wide">
                     أحمد <span class="text-3xl md:text-4xl font-normal">&</span> دانا
                 </div>
@@ -404,7 +403,7 @@
             };
         }
 
-        // قاموس الترجمة الكامل
+        // قاموس الترجمة الكامل (تم تحديث النص في الإنجليزي)
         const translations = {
             ar: {
                 bismillah: "بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ",
@@ -456,8 +455,8 @@
                 bismillah: "In the Name of Allah, the Most Gracious, the Most Merciful",
                 quranVerse: "“And one of His signs is that He created for you spouses from among yourselves so that you may find comfort in them. And He has placed between you compassion and mercy. Surely in this are signs for those who reflect.”",
                 quranSurah: "Surah Ar-Rum [30:21]",
-                welcomeTitle: "With Love & Joy,",
-                welcomeText: "We are delighted to share the beginning of our new chapter<br>and celebrate our wedding day with you.",
+                welcomeTitle: "",
+                welcomeText: "Together with our families, we joyfully invite you to celebrate our wedding and share with us the beginning of our forever",
                 weddingTitle: "THE WEDDING OF",
                 couplesNames: '<span>Ahmed Mokhtar</span><span class="font-en-serif text-2xl md:text-3xl font-light py-0.5">&</span><span>Dana Abu Hawili</span>',
                 eventDetailsTitle: "Wedding Details",
@@ -514,7 +513,6 @@
                 html.setAttribute('dir', 'ltr');
                 html.setAttribute('lang', 'en');
                 
-                // تحريك الدائرة والتحكم بتموضع العناصر بدقة
                 langToggleBtn.style.flexDirection = 'row-reverse';
                 langCircle.style.transform = 'translateX(0px)';
                 langText.innerText = 'AR';
@@ -542,7 +540,15 @@
             document.querySelector('[data-key="bismillah"]').innerHTML = langData.bismillah;
             document.querySelector('[data-key="quran-verse"]').innerHTML = langData.quranVerse;
             document.querySelector('[data-key="quran-surah"]').innerText = langData.quranSurah;
-            document.querySelector('[data-key="welcome-title"]').innerText = langData.welcomeTitle;
+            
+            const welcomeTitleEl = document.querySelector('[data-key="welcome-title"]');
+            welcomeTitleEl.innerText = langData.welcomeTitle;
+            if (!langData.welcomeTitle) {
+                welcomeTitleEl.classList.add('hidden');
+            } else {
+                welcomeTitleEl.classList.remove('hidden');
+            }
+
             document.querySelector('[data-key="welcome-text"]').innerHTML = langData.welcomeText;
             document.querySelector('[data-key="wedding-title"]').innerText = langData.weddingTitle;
             document.querySelector('[data-key="couples-names"]').innerHTML = langData.couplesNames;
