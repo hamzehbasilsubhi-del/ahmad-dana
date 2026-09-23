@@ -103,7 +103,7 @@
     <div id="envelope-page" class="fixed inset-0 z-50 bg-[#f4ebdf] flex flex-col items-center justify-center transition-opacity duration-1000 overflow-hidden">
         <div id="video-wrapper" class="w-full max-w-md h-full aspect-9-16 relative overflow-hidden cursor-pointer group" onclick="startOpeningSequence()">
             
-            <!-- فيديو المظروف (يعرض الفريم الأول ويشتغل مباشرة عند الضغط) -->
+            <!-- فيديو المظروف -->
             <video id="envelope-video" class="w-full h-full object-cover" playsinline muted preload="auto">
                 <source src="envelope-opening.mp4#t=0.001" type="video/mp4">
             </video>
@@ -288,11 +288,6 @@
                 </div>
 
                 <div class="reveal-up delay-400">
-                    <label data-key="label-guests" class="block text-xs font-semibold text-[#6E5637] mb-1">عدد المرافقين</label>
-                    <input type="number" min="0" max="5" value="0" class="w-full px-4 py-2.5 rounded-xl bg-[#f8f3eb] border border-[#d2c4b1] text-sm text-[#4A3E3D] focus:outline-none focus:border-[#8C6D46] transition-colors">
-                </div>
-
-                <div class="reveal-up delay-500">
                     <button id="btn-submit-rsvp" type="submit" data-key="btn-rsvp" class="w-full py-3 px-6 mt-2 rounded-xl bg-[#8C6D46] text-white text-sm font-semibold shadow-md hover:bg-[#735836] active:scale-95 transition-all">
                         إرسال التأكيد
                     </button>
@@ -314,7 +309,7 @@
             <div class="space-y-1">
                 <p data-key="gift-line1" class="text-base font-semibold text-[#5C4D4A] reveal-up delay-100">حضوركم أثمن هدية،</p>
                 <p data-key="gift-line2" class="text-sm text-[#786452] reveal-up delay-200">لكل من حابب يشارك</p>
-                <p data-key="gift-line3" class="text-xs text-[#8C6D46] font-medium pt-1 reveal-up delay-300">رقم الحساب داخل الختم</p>
+                <p data-key="gift-line3" class="text-xs text-[#8C6D46] font-medium pt-1 reveal-up delay-300">تفاصيل الحساب داخل الختم</p>
             </div>
 
             <!-- الختم الشمعي -->
@@ -330,14 +325,26 @@
                     </svg>
                 </div>
 
-                <!-- بطاقة رقم الحساب -->
-                <div id="account-card" class="hidden mt-4 p-4 rounded-2xl bg-[#f8f3eb] border border-[#d2c4b1] shadow-sm max-w-xs w-full text-center space-y-2 transition-all">
-                    <p data-key="iban-label" class="text-xs text-[#786452] font-semibold">رقم الحساب البنكي (IBAN)</p>
-                    <p id="iban-text" class="font-numbers text-sm text-[#4A3E3D] font-bold tracking-wider dir-ltr select-all">AE240351361033731278029</p>
-                    <button onclick="copyIBAN()" data-key="copy-btn" class="text-xs text-[#8C6D46] hover:text-[#735836] font-semibold underline underline-offset-2 transition-colors pt-1">
-                        نسخ رقم الحساب
-                    </button>
-                    <p id="copy-success" data-key="copy-success-msg" class="hidden text-[10px] text-emerald-700 font-semibold">تم النسخ بنجاح!</p>
+                <!-- بطاقة تفاصيل الحساب البنكي الكاملة -->
+                <div id="account-card" class="hidden mt-4 p-5 rounded-2xl bg-[#f8f3eb] border border-[#d2c4b1] shadow-md max-w-sm w-full text-center space-y-3 transition-all text-xs text-[#4A3E3D]">
+                    <h4 data-key="bank-details-header" class="font-bold text-sm text-[#8C6D46] border-b border-[#d2c4b1]/60 pb-2">تفاصيل الحساب البنكي</h4>
+                    
+                    <div class="space-y-1.5 text-right font-body" id="bank-info-container">
+                        <p><span class="font-semibold text-[#786452]" data-key="lbl-bank-name">اسم البنك:</span> <span class="font-bold">First Abu Dhabi Bank PJSC</span></p>
+                        <p><span class="font-semibold text-[#786452]" data-key="lbl-acc-holder">اسم صاحب الحساب:</span> <span class="font-bold">DANA ABOU HAOUILI</span></p>
+                        <p><span class="font-semibold text-[#786452]" data-key="lbl-acc-type">نوع الحساب:</span> <span data-key="val-acc-type" class="font-bold">حساب جاري (Current Account)</span></p>
+                        <p><span class="font-semibold text-[#786452]" data-key="lbl-acc-num">رقم الحساب:</span> <span class="font-numbers font-bold select-all dir-ltr inline-block">1361033731278029</span></p>
+                        <p><span class="font-semibold text-[#786452]" data-key="lbl-iban">رقم الآيبان (IBAN):</span> <span id="iban-text" class="font-numbers font-bold text-[#8C6D46] select-all dir-ltr inline-block">AE240351361033731278029</span></p>
+                        <p><span class="font-semibold text-[#786452]" data-key="lbl-swift">رمز السويفت (SWIFT):</span> <span class="font-numbers font-bold select-all dir-ltr inline-block">NBADAEAAXXX</span></p>
+                        <p><span class="font-semibold text-[#786452]" data-key="lbl-currency">العملة:</span> <span data-key="val-currency" class="font-bold">درهم إماراتي (AED)</span></p>
+                    </div>
+
+                    <div class="pt-2 border-t border-[#d2c4b1]/60">
+                        <button onclick="copyIBAN()" data-key="copy-btn" class="w-full py-2 px-4 rounded-lg bg-[#8C6D46] text-white hover:bg-[#735836] font-semibold transition-colors shadow-sm text-xs">
+                            نسخ رقم الآيبان (IBAN)
+                        </button>
+                        <p id="copy-success" data-key="copy-success-msg" class="hidden text-[11px] text-emerald-700 font-bold pt-1.5">تم النسخ بنجاح!</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -403,7 +410,7 @@
             };
         }
 
-        // قاموس الترجمة الكامل (تم تحديث النص في الإنجليزي)
+        // قاموس الترجمة الكامل (يشمل بيانات البنك المحدثة)
         const translations = {
             ar: {
                 bismillah: "بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ",
@@ -436,16 +443,24 @@
                 optSelect: "اختر الإجابة",
                 optYes: "يشرفني الحضور بكل سرور",
                 optNo: "أعتذر لعدم التمكن من الحضور",
-                labelGuests: "عدد المرافقين",
                 btnRsvp: "إرسال التأكيد",
                 rsvpSuccessMsg: "شكراً لكم! تم استلام ردكم بنجاح.",
                 giftTitle: "مشاركة",
                 giftLine1: "حضوركم أثمن هدية،",
                 giftLine2: "لكل من حابب يشارك",
-                giftLine3: "رقم الحساب داخل الختم",
+                giftLine3: "تفاصيل الحساب داخل الختم",
                 clickHere: "اضغط هنا",
-                ibanLabel: "رقم الحساب البنكي (IBAN)",
-                copyBtn: "نسخ رقم الحساب",
+                bankDetailsHeader: "تفاصيل الحساب البنكي",
+                lblBankName: "اسم البنك:",
+                lblAccHolder: "اسم صاحب الحساب:",
+                lblAccType: "نوع الحساب:",
+                valAccType: "حساب جاري (Current)",
+                lblAccNum: "رقم الحساب:",
+                lblIban: "رقم الآيبان (IBAN):",
+                lblSwift: "رمز السويفت (SWIFT):",
+                lblCurrency: "العملة:",
+                valCurrency: "درهم إماراتي (AED)",
+                copyBtn: "نسخ رقم الآيبان (IBAN)",
                 copySuccessMsg: "تم النسخ بنجاح!",
                 withLoveTitle: "بمحبة",
                 typingQuoteText: '"حضوركم يشرّفنا ويزيّن فرحتنا"',
@@ -482,7 +497,6 @@
                 optSelect: "Select an option",
                 optYes: "Joyfully Accepts",
                 optNo: "Regretfully Declines",
-                labelGuests: "Number of Guests",
                 btnRsvp: "Submit Confirmation",
                 rsvpSuccessMsg: "Thank you! Your response has been received.",
                 giftTitle: "Gifts & Registry",
@@ -490,7 +504,16 @@
                 giftLine2: "For those who wish to contribute",
                 giftLine3: "Account details are inside the seal",
                 clickHere: "Click Here",
-                ibanLabel: "Bank Account (IBAN)",
+                bankDetailsHeader: "Bank Account Details",
+                lblBankName: "Bank Name:",
+                lblAccHolder: "Account Holder:",
+                lblAccType: "Account Type:",
+                valAccType: "Current Account",
+                lblAccNum: "Account Number:",
+                lblIban: "IBAN:",
+                lblSwift: "SWIFT Code:",
+                lblCurrency: "Currency:",
+                valCurrency: "AED",
                 copyBtn: "Copy IBAN",
                 copySuccessMsg: "Copied successfully!",
                 withLoveTitle: "With Love",
@@ -508,6 +531,7 @@
             const langText = document.getElementById('lang-text');
             const langToggleBtn = document.getElementById('lang-toggle-btn');
             const rsvpForm = document.getElementById('rsvp-form');
+            const bankInfoContainer = document.getElementById('bank-info-container');
 
             if (currentLang === 'en') {
                 html.setAttribute('dir', 'ltr');
@@ -519,6 +543,8 @@
                 
                 rsvpForm.classList.remove('text-right');
                 rsvpForm.classList.add('text-left');
+                bankInfoContainer.classList.remove('text-right');
+                bankInfoContainer.classList.add('text-left');
             } else {
                 html.setAttribute('dir', 'rtl');
                 html.setAttribute('lang', 'ar');
@@ -529,6 +555,8 @@
                 
                 rsvpForm.classList.remove('text-left');
                 rsvpForm.classList.add('text-right');
+                bankInfoContainer.classList.remove('text-left');
+                bankInfoContainer.classList.add('text-right');
             }
 
             updateDOMTexts();
@@ -575,7 +603,6 @@
             document.querySelector('[data-key="opt-select"]').innerText = langData.optSelect;
             document.querySelector('[data-key="opt-yes"]').innerText = langData.optYes;
             document.querySelector('[data-key="opt-no"]').innerText = langData.optNo;
-            document.querySelector('[data-key="label-guests"]').innerText = langData.labelGuests;
             document.querySelector('[data-key="btn-rsvp"]').innerText = langData.btnRsvp;
             document.querySelector('[data-key="rsvp-success-msg"]').innerText = langData.rsvpSuccessMsg;
             document.querySelector('[data-key="gift-title"]').innerText = langData.giftTitle;
@@ -583,7 +610,19 @@
             document.querySelector('[data-key="gift-line2"]').innerText = langData.giftLine2;
             document.querySelector('[data-key="gift-line3"]').innerText = langData.giftLine3;
             document.querySelector('[data-key="click-here"]').innerText = langData.clickHere;
-            document.querySelector('[data-key="iban-label"]').innerText = langData.ibanLabel;
+            
+            // تحديث نصوص تفاصيل البنك
+            document.querySelector('[data-key="bank-details-header"]').innerText = langData.bankDetailsHeader;
+            document.querySelector('[data-key="lbl-bank-name"]').innerText = langData.lblBankName;
+            document.querySelector('[data-key="lbl-acc-holder"]').innerText = langData.lblAccHolder;
+            document.querySelector('[data-key="lbl-acc-type"]').innerText = langData.lblAccType;
+            document.querySelector('[data-key="val-acc-type"]').innerText = langData.valAccType;
+            document.querySelector('[data-key="lbl-acc-num"]').innerText = langData.lblAccNum;
+            document.querySelector('[data-key="lbl-iban"]').innerText = langData.lblIban;
+            document.querySelector('[data-key="lbl-swift"]').innerText = langData.lblSwift;
+            document.querySelector('[data-key="lbl-currency"]').innerText = langData.lblCurrency;
+            document.querySelector('[data-key="val-currency"]').innerText = langData.valCurrency;
+
             document.querySelector('[data-key="copy-btn"]').innerText = langData.copyBtn;
             document.querySelector('[data-key="copy-success-msg"]').innerText = langData.copySuccessMsg;
             document.querySelector('[data-key="with-love-title"]').innerText = langData.withLoveTitle;
