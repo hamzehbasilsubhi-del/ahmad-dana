@@ -3,7 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دعوة زفاف أحمد ودانا | Ahmed & Dana Wedding</title>
+    
+    <!-- Title for Browser & WhatsApp -->
+    <title>Ahmed & Dana - Wedding Invitation 01.11.2026 - Palazzo Versace Dubai</title>
+
+    <!-- Open Graph Meta Tags for WhatsApp & Social Media Preview -->
+    <meta property="og:title" content="Ahmed & Dana - Wedding Invitation 01.11.2026 - Palazzo Versace Dubai">
+    <meta property="og:description" content="يسرّنا أن نشارككم بداية أجمل فصول حياتنا، وأن تكونوا معنا لنحتفل بيوم زفافنا.">
+    <meta property="og:image" content="envelope-cover.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ahmed & Dana - Wedding Invitation 01.11.2026 - Palazzo Versace Dubai">
+    <meta name="twitter:description" content="يسرّنا أن نشارككم بداية أجمل فصول حياتنا، وأن تكونوا معنا لنحتفل بيوم زفافنا.">
+    <meta name="twitter:image" content="envelope-cover.jpg">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -84,7 +102,7 @@
         <source src="background-music.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- زر اللغة مع رفع z-index لـ z-50 ليكون ظاهراً فوق الغلاف الخارجي -->
+    <!-- زر اللغة -->
     <div class="fixed top-5 left-5 z-50" dir="ltr">
         <button id="lang-toggle-btn" onclick="toggleLanguage()" class="bg-[#2a1c24]/90 hover:bg-[#2a1c24] border border-[#8C6D46]/50 text-[#d4af37] px-2 py-1.5 rounded-full flex items-center justify-between w-20 h-9 shadow-xl transition-all duration-300 backdrop-blur-md cursor-pointer select-none">
             <span id="lang-circle" class="w-6 h-6 rounded-full border-2 border-[#cbb89d] bg-[#d4af37]/20 flex items-center justify-center transition-all duration-300 transform translate-x-0"></span>
@@ -95,7 +113,7 @@
     <!-- الغلاف الخارجي (المظروف) -->
     <div id="envelope-page" class="fixed inset-0 z-40 bg-[#f4ebdf] flex flex-col items-center justify-center transition-opacity duration-1000 overflow-hidden">
         <div id="video-wrapper" class="w-full max-w-md h-full aspect-9-16 relative overflow-hidden cursor-pointer group" onclick="startOpeningSequence()">
-            <video id="envelope-video" class="w-full h-full object-cover" playsinline muted preload="auto">
+            <video id="envelope-video" class="w-full h-full object-cover" playsinline muted preload="auto" poster="envelope-cover.jpg">
                 <source src="envelope-opening.mp4#t=0.001" type="video/mp4">
             </video>
             <div id="tap-hint" data-key="tap-hint" class="absolute bottom-10 left-1/2 -translate-x-1/2 bg-black/60 text-white text-xs font-semibold px-5 py-2.5 rounded-full backdrop-blur-sm tracking-wide transition-opacity duration-500 animate-pulse pointer-events-none">
