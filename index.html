@@ -84,14 +84,16 @@
         <source src="background-music.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="fixed top-5 left-5 z-40" dir="ltr">
+    <!-- زر اللغة مع رفع z-index لـ z-50 ليكون ظاهراً فوق الغلاف الخارجي -->
+    <div class="fixed top-5 left-5 z-50" dir="ltr">
         <button id="lang-toggle-btn" onclick="toggleLanguage()" class="bg-[#2a1c24]/90 hover:bg-[#2a1c24] border border-[#8C6D46]/50 text-[#d4af37] px-2 py-1.5 rounded-full flex items-center justify-between w-20 h-9 shadow-xl transition-all duration-300 backdrop-blur-md cursor-pointer select-none">
             <span id="lang-circle" class="w-6 h-6 rounded-full border-2 border-[#cbb89d] bg-[#d4af37]/20 flex items-center justify-center transition-all duration-300 transform translate-x-0"></span>
             <span id="lang-text" class="text-xs font-bold font-numbers px-1 text-[#d4af37]">EN</span>
         </button>
     </div>
 
-    <div id="envelope-page" class="fixed inset-0 z-50 bg-[#f4ebdf] flex flex-col items-center justify-center transition-opacity duration-1000 overflow-hidden">
+    <!-- الغلاف الخارجي (المظروف) -->
+    <div id="envelope-page" class="fixed inset-0 z-40 bg-[#f4ebdf] flex flex-col items-center justify-center transition-opacity duration-1000 overflow-hidden">
         <div id="video-wrapper" class="w-full max-w-md h-full aspect-9-16 relative overflow-hidden cursor-pointer group" onclick="startOpeningSequence()">
             <video id="envelope-video" class="w-full h-full object-cover" playsinline muted preload="auto">
                 <source src="envelope-opening.mp4#t=0.001" type="video/mp4">
@@ -265,16 +267,17 @@
             </div>
         </section>
 
-        <section class="py-12 px-6 text-center space-y-5 bg-[#f4ebdf]">
+        <!-- قسم الهدايا المحدث -->
+        <section class="py-12 px-6 text-center space-y-6 bg-[#f4ebdf]">
             <div class="space-y-3 flex flex-col items-center reveal-up">
-                <h3 data-key="gift-title" class="font-ibm text-lg md:text-xl font-medium text-[#8C6D46]">مشاركة</h3>
+                <h3 data-key="gift-title" class="font-ibm text-lg md:text-xl font-medium text-[#8C6D46]">هدايـــا</h3>
                 <div class="w-12 h-0.5 bg-[#CBB89D]/60 mx-auto rounded-full"></div>
             </div>
 
             <div class="space-y-1">
-                <p data-key="gift-line1" class="text-base font-semibold text-[#5C4D4A] reveal-up delay-100">حضوركم أثمن هدية،</p>
-                <p data-key="gift-line2" class="text-sm text-[#786452] reveal-up delay-200">لكل من حابب يشارك</p>
-                <p data-key="gift-line3" class="text-xs text-[#8C6D46] font-medium pt-1 reveal-up delay-300">تفاصيل الحساب داخل الختم</p>
+                <p data-key="gift-line1" class="text-base font-semibold text-[#5C4D4A] reveal-up delay-100">حضوركم أجمــل وأثمــن هديــة</p>
+                <p data-key="gift-line2" class="text-sm text-[#786452] reveal-up delay-200">لمن يرغب لائحة الهدايـــا</p>
+                <p data-key="gift-line3" class="text-xs text-[#8C6D46] font-medium pt-1 reveal-up delay-300">متوفرة داخل الختــم</p>
             </div>
 
             <div class="pt-2 flex flex-col items-center reveal-up delay-400">
@@ -387,16 +390,16 @@
                 venueLabel: "المكان",
                 venueVal: "بالاتزو فيرساتشي دبي",
                 timeLabel: "الوقت",
-                timeVal: "٧:٠٠ مساءً",
+                timeVal: "٧:٠0 مساءً",
                 locationAddress: "الجداف، واجهة الجداف المائية، دبي",
                 mapBtn: "افتح على الخريطة",
-                countdownTitle: "Until Our Joy",
+                countdownTitle: "باقٍ على فرحتنا",
                 unitDays: "أيام",
                 unitHours: "ساعات",
                 unitMinutes: "دقائق",
                 unitSeconds: "ثوانٍ",
                 countdownDate: "الأحد ١ نوفمبر ٢٠٢٦",
-                rsvpTitle: "Attendance Confirmation",
+                rsvpTitle: "تأكيد الحضور",
                 rsvpDesc: "يسعدنا تأكيد حضوركم ليتسنى لنا إتمام التحضيرات واستقبالكم بما يليق بكم.",
                 labelName: "الاسم الكريم",
                 inputNamePlaceholder: "يرجى كتابة الاسم الثلاثي",
@@ -406,16 +409,16 @@
                 optNo: "أعتذر لعدم التمكن من الحضور",
                 btnRsvp: "إرسال التأكيد",
                 rsvpSuccessMsg: "شكراً لكم! تم استلام ردكم بنجاح.",
-                giftTitle: "مشاركة",
-                giftLine1: "حضوركم أثمن هدية،",
-                giftLine2: "لكل من حابب يشارك",
-                giftLine3: "تفاصيل الحساب داخل الختم",
+                giftTitle: "هدايـــا",
+                giftLine1: "حضوركم أجمــل وأثمــن هديــة",
+                giftLine2: "لمن يرغب لائحة الهدايـــا",
+                giftLine3: "متوفرة داخل الختــم",
                 clickHere: "اضغط هنا",
                 bankDetailsHeader: "تفاصيل الحساب البنكي",
                 lblBankName: "اسم البنك:",
                 lblAccHolder: "اسم صاحب الحساب:",
                 lblAccType: "نوع الحساب:",
-                valAccType: "حساب جاري (Current)",
+                valAccType: "حساب جاري (Current Account)",
                 lblAccNum: "رقم الحساب:",
                 lblIban: "رقم الآيبان (IBAN):",
                 lblSwift: "رمز السويفت (SWIFT):",
@@ -463,7 +466,7 @@
                 giftTitle: "Gifts & Registry",
                 giftLine1: "Your presence is our greatest gift,",
                 giftLine2: "For those who wish to contribute",
-                giftLine3: "Account details are inside the seal",
+                giftLine3: "Gift list available inside the seal",
                 clickHere: "Click Here",
                 bankDetailsHeader: "Bank Account Details",
                 lblBankName: "Bank Name:",
@@ -619,7 +622,6 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // دالة الإرسال المباشرة عبر Fetch للـ Google Apps Script (الدعوة الأولى)
         function submitRSVP(event) {
             event.preventDefault();
             const form = document.getElementById('rsvp-form');
