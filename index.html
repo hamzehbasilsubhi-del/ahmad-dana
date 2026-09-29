@@ -330,22 +330,22 @@
             if (tapHint) tapHint.style.opacity = '0';
 
             if (bgMusic) {
-                bgMusic.play().catch(error => console.log("الصوت يتطلب تفاعل:", error));
+                bgMusic.play().catch(error => console.log("الصوت يتطلب تفاعل المستخدم:", error));
             }
 
-            envelopeVideo.play().catch(error => {
-                console.log("خطأ في تشغيل الفيديو:", error);
-            });
-
-            envelopeVideo.onended = function() {
-                envelopePage.classList.add('opacity-0');
-                setTimeout(() => {
-                    envelopePage.style.display = 'none';
-                    mainContent.classList.remove('opacity-0');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    initScrollObserver();
-                }, 1000);
-            };
+            if (envelopeVideo) {
+                envelopeVideo.play().catch(error => console.log("خطأ في تشغيل الفيديو:", error));
+                
+                envelopeVideo.onended = function() {
+                    envelopePage.classList.add('opacity-0');
+                    setTimeout(() => {
+                        envelopePage.style.display = 'none';
+                        mainContent.classList.remove('opacity-0');
+                        window.scrollTo({ top: 0, behavior: 'instant' });
+                        initScrollObserver();
+                    }, 1000);
+                };
+            }
         }
 
         const translations = {
@@ -364,7 +364,7 @@
                 venueLabel: "المكان",
                 venueVal: "بالاتزو فيرساتشي دبي",
                 timeLabel: "الوقت",
-                timeVal: "٧:٠0 مساءً",
+                timeVal: "٧:٠٠ مساءً",
                 locationAddress: "الجداف، واجهة الجداف المائية، دبي",
                 mapBtn: "افتح على الخريطة",
                 countdownTitle: "باقٍ على فرحتنا",
@@ -441,7 +441,7 @@
                 html.setAttribute('dir', 'ltr');
                 html.setAttribute('lang', 'en');
                 langToggleBtn.style.flexDirection = 'row-reverse';
-                langCircle.style.transform = 'translateX(0px)';
+                langCircle.style.transform = 'translateX(2px)';
                 langText.innerText = 'AR';
                 rsvpForm.classList.remove('text-right');
                 rsvpForm.classList.add('text-left');
@@ -509,6 +509,7 @@
 
             const quoteEl = document.getElementById('typing-quote');
             if (quoteEl) {
+                if (typingTimeout) clearTimeout(typingTimeout);
                 quoteEl.innerText = '';
                 startTypingEffect(quoteEl, langData.typingQuoteText);
             }
@@ -579,7 +580,12 @@
             });
         }
 
+        let observerInitialized = false;
+
         function initScrollObserver() {
+            if (observerInitialized) return;
+            observerInitialized = true;
+
             const observerOptions = {
                 root: null,
                 rootMargin: '0px 0px -50px 0px',
